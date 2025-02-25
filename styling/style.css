@@ -1,0 +1,116 @@
+body{
+  background-color: azure;
+  margin:0;
+  font-family:Arial, Helvetica, sans-serif;
+}
+
+body a{
+  text-decoration: none;
+  
+  }
+
+main{
+ text-align: center;
+ margin:200px;
+}
+
+.title{
+
+  margin:150px;
+}
+
+.mainContent{
+  display:flex;
+  text-align: center;
+  justify-content: center;
+  flex-direction: row;
+  padding:30px;
+}
+
+main p{
+padding:50px;
+margin:40px;
+background-color:rgb(94, 187, 224);
+border-radius:12px;
+color:white;
+}
+
+
+
+
+.createAccountText{
+  font-weight:bold;
+  color:black;
+}
+
+.dontHaveAnAccount{
+  margin-top:40px;
+}
+
+
+.alreadyHaveAnAccount{
+  margin-top:40px;
+}
+
+
+.form{
+  align-items: center;
+}
+
+.logInSignUp{
+  padding:10px;
+  width:100%;
+  border-radius:4px;
+  border:none;
+  background-color:rgb(75, 155, 186);
+  color:azure;
+  margin-left:19px;
+  margin-top:20px;
+}
+
+
+#inputMobileNumber{
+  display:flex;
+  flex-direction: row;
+}
+
+
+
+.inputGroup{
+  margin-bottom:35px;
+}
+
+
+form{
+  margin: 0 2rem;
+}
+
+.paymentMethodDetails{
+  display:none;
+}
+
+input{
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid grey ;
+  padding:20px;
+  font-size: 19px;
+}
+
+select{
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid grey ;
+  padding:20px;
+  font-size: 19px;
+  color:  grey;
+}
+
+
+.inline{
+ display:flex;
+ justify-content: center;
+ align-items:center;
+}
