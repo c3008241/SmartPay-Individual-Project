@@ -15,7 +15,7 @@
     <header>
     <div class="logoWrapper">
 
-      <a href="index.html" id="smartPayLogo">
+      <a href="homePage.html" id="smartPayLogo">
         <img src="images/smartPayLogo.png"  height="50" width="50">
        </a>
 
@@ -33,11 +33,11 @@
 
     <nav class="navBar">
       <ul>
-        <li><a href="index.html">Home |</a></li>
-        <li><a href="invest.html">INVEST |</a></li>
-        <li><a href="moneyBalance.html">PAYMENTS |</a></li>
-        <li><a href="transactionHistory.html">TRANSACTION HISTORY |</a></li>
-        <li><a href="contactUs.html">CONTACT US</a></li>
+        <li><a href="index.php">HOME |</a></li>
+        <li><a href="invest.php">INVEST |</a></li>
+        <li><a href="moneyBalance.php">PAYMENTS |</a></li>
+        <li><a href="transactionHistory.php">TRANSACTION HISTORY |</a></li>
+        <li><a href="contactUs.php">CONTACT US</a></li>
       </ul>
     </nav>
 

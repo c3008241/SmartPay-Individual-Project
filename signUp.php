@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,7 +21,7 @@
     <header>
       <div class="logoWrapper">
 
-        <a href="index.html" id="smartPayLogo">
+        <a href="index.php" id="smartPayLogo">
           <img src="images/smartPayLogo.png" height="50" width="50">
         </a>
 
@@ -37,11 +39,11 @@
 
     <nav class="navBar">
       <ul>
-        <li><a href="index.html">HOME |</a></li>
-        <li><a href="invest.html">INVEST |</a></li>
-        <li><a href="moneyBalance.html">PAYMENTS |</a></li>
-        <li><a href="transactionHistory.html">TRANSACTION HISTORY |</a></li>
-        <li><a href="contactUs.html">CONTACT US</a></li>
+        <li><a href="index.php">HOME |</a></li>
+        <li><a href="invest.php">INVEST |</a></li>
+        <li><a href="moneyBalance.php">PAYMENTS |</a></li>
+        <li><a href="transactionHistory.php">TRANSACTION HISTORY |</a></li>
+        <li><a href="contactUs.php">CONTACT US</a></li>
       </ul>
     </nav>
 
@@ -57,8 +59,6 @@
 
 
         <form  method="post" action="register.php">
-
-
 
 
           <div class="inputGroup">
@@ -100,11 +100,11 @@
 
             <select name="userType" id="userType">
 
-              <option value="Mrs">Personal</option>
+              <option value="Personal">Personal</option>
 
-              <option value="Miss">Tourist</option>
+              <option value="Tourist">Tourist</option>
 
-              <option value="Mr">Business Owner</option>
+              <option value="Business Owner">Business Owner</option>
 
             </select>
           </div>
@@ -123,20 +123,20 @@
           <div id="inputMobileNumber">
 
           <div class="countryCode">
-            <select name="numberSelect" id="numberSelect">
-              <option value="britain">UK +44</option>
+            <select name="countryCode" id="countryCode">
+              <option value="+44">UK +44</option>
 
-              <option value="spain">SPAIN +34</option>
+              <option value="+34">SPAIN +34</option>
 
-              <option value="usa">USA +1</option>
+              <option value="+1">USA +1</option>
 
-              <option value="italy">ITALY +39</option>
+              <option value="+39">ITALY +39</option>
 
-              <option value="yemen">YEMEN +967</option>
+              <option value="+967">YEMEN +967</option>
             </select>
           </div>
 
-            <input type="number" id="number" name="number" required placeholder="[GB] +44 7325922756">
+            <input type="mobileNumber" id="mobileNumber" name="mobileNumber" required placeholder="[GB] +44 7325922756">
           </div>
           </div>
 
@@ -154,62 +154,17 @@
               placeholder="sarahwhit43">
           </div>
             <div>
-              <button class="logInSignUp" id="nextButton" onclick="paymentMethodForm(event)">Next</button>
 
-            </div>
+          <input type="submit" class="logInSignUp" id="signUp" name="register" value="Sign Up">
+              
             
             </form>
-
-      </div>
-      
-      <div class="paymentMethodDetails">
-
-          <div class="title">
-            <h1>Add Card Details</h1>
-          </div>
-
-          <form  method="post" action="paymentMethod.php">
-
-
-          <div class="inputGroup">
-            <i class="fas fa-dollar"></i>
-            <label for="cardNumber">Card Number:</label>
-            <input type="number" class="changeToInt" id="cardNumber" name="cardNumber" 
-            placeholder="0000 0000 0000 0000 (e.g 1234 5678 9101 1121)">
-          </div>
-
-          <div class="inputGroup">
-            <i class="fas fa-user"></i>
-            <label for="expirationDate">Expiration Date:</label>
-            <input type="number" class="changeToInt"  id="expirationDate" name="expirationDate"required placeholder="00/00 (e.g 04/28)">
-          </div>
-
-          <div class="inputGroup">
-            <i class="fas fa-bank"></i>
-            <label for="cvv">CVV:</label>
-            <input type="number" id="cvv" class="changeToInt" name="cvv" required placeholder="000 (e.g 111)">
-          </div>
-          
-            
-
-
-          <input type="submit" class="logInSignUp" id="signUp" name="signUp" value="Sign Up">
-
-
-    </form>
-  </div>
-
-
-
-
-
-
-
 
       <div class="alreadyHaveAnAccount">
         <a>Already have an account?</a>
         <a href="logIn.html" class="createAccountText"> Log in</a>
       </div>
+
 
 
     </main>

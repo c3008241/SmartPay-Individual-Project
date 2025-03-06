@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,32 +6,37 @@
   <link rel="stylesheet" href="styling\headerAndFooter.css">
   <link rel="stylesheet" href="styling\style.css">
   <link rel ="icon" href="images/smartPayLogo.png" >
-  <title>Log in | SmartPay</title>
+  <title>Transaction History | SmartPay</title>
 </head>
 <body>
   <div class="container">
     <header>
     <div class="logoWrapper">
 
-      <a href="index.html" id="smartPayLogo">
-        <img src="images/smartPayLogo.png"  height="50" width="50">
-       </a>
+      <a href="homePage.html" id="smartPayLogo">
+       <img src="images/smartPayLogo.png"  height="50" width="50">
+      </a>
 
+      
       <div class="logoText">
        <p>SmartPay</p>
        <p>Banking Made Simple</p>
       </div>
+
     </div>
 
     <div class="searchBar">
     <input class="searchBar" placeholder="Search &#x1F50E;">
     </div>
+    
     <img src="images/userIcon.png" id="userIcon">
+
+    <a href="logIn.html">Log in</a>
     </header>
 
     <nav class="navBar">
       <ul>
-        <li><a href="index.html">Home |</a></li>
+        <li><a href="homePage.html">HOME |</a></li>
         <li><a href="invest.html">INVEST |</a></li>
         <li><a href="moneyBalance.html">PAYMENTS |</a></li>
         <li><a href="transactionHistory.html">TRANSACTION HISTORY |</a></li>
@@ -46,35 +49,10 @@
 
   <main>
     <div class="title">
-      <h1>Log in</h1>
+      <h1>Transaction Reciept</h1>
     </div>
 
-
-    <form action="login.php" method="post">
-
-      <div class="inputGroup">
-        <i class="fas fa-envelope"></i>
-      <label for="email">Email Address:</label>
-      <input type="email" id="email" name="email" required placeholder="sarahwhitaker@gmail.com">
-      </div>
-
-      <div class="inputGroup">
-        <i class="fas fa-lock"></i>
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" maxlength="12" required placeholder="sarahwhit43">
-      </div>
-
-<div>
-  <input type="submit" class="logInSignUp" id="logIn" name="logIn" value="Log in">
-
-</div>
-
-    </form>
-    
-    <div class="dontHaveAnAccount">
-      <a>Don't have an account?</a>
-      <a href="signUp.html" class="createAccountText"> Create an account</a>
-      </div>
+ 
 
   </main>
 
@@ -93,5 +71,7 @@
   </footer>
 
   </div>
+
+  
 </body>
 </html>

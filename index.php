@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,38 +6,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styling\headerAndFooter.css">
   <link rel="stylesheet" href="styling\style.css">
-  <script src = "scripting/app.js"></script>
   <link rel ="icon" href="images/smartPayLogo.png" >
-  <title> Balance | SmartPay</title>
+  <title>Home Page | SmartPay</title>
 </head>
 <body>
   <div class="container">
     <header>
     <div class="logoWrapper">
 
-      <a href="index.html" id="smartPayLogo">
-        <img src="images/smartPayLogo.png"  height="50" width="50">
-       </a>
+      <a href="index.php" id="smartPayLogo">
+       <img src="images/smartPayLogo.png"  height="50" width="50">
+      </a>
 
+      
       <div class="logoText">
        <p>SmartPay</p>
        <p>Banking Made Simple</p>
       </div>
+
     </div>
 
     <div class="searchBar">
     <input class="searchBar" placeholder="Search &#x1F50E;">
     </div>
+    
     <img src="images/userIcon.png" id="userIcon">
+
+    <a href="logIn.php">Log in</a>
     </header>
 
     <nav class="navBar">
       <ul>
-        <li><a href="index.html">Home |</a></li>
-        <li><a href="invest.html">INVEST |</a></li>
-        <li><a href="moneyBalance.html">PAYMENTS |</a></li>
-        <li><a href="transactionHistory.html">TRANSACTION HISTORY |</a></li>
-        <li><a href="contactUs.html">CONTACT US</a></li>
+        <li><a href="index.php">HOME |</a></li>
+        <li><a href="invest.php">INVEST |</a></li>
+        <li><a href="moneyBalance.php">PAYMENTS |</a></li>
+        <li><a href="transactionHistory.php">TRANSACTION HISTORY |</a></li>
+        <li><a href="contactUs.php">CONTACT US</a></li>
       </ul>
     </nav>
 
@@ -45,31 +50,30 @@
 
   <main>
     <div class="title">
-      <h1>Your Balance</h1>
+      <h1>Welcome To SmartPay</h1>
     </div>
 
-    <div class="balancePageContent">
+    <div class="mainContent">
+<a href="logIn.php">
+<p>Are you a Tourist?</p>
+</a>
 
-      <div>
-        <div class="inline">
-          £
-        <h2 class="balanceBefore">20</h2>
-      </div>
-
-      <div class="inline">
-        £
-        <div class="balanceAfter">20</div> 
-      </div>
-
-      <input type="number" class="inputAmount"> 
-
-      <button onclick="calculateTotal()">Calculate</button> 
-    
-
-    </div>
+<a href="logIn.php">
+<p>Are you a Business Owner?</p>
+</a>
 
 
-   
+<a href="logIn.php">
+<p>Personal</p>
+</a>
+</div>
+
+
+<div class="dontHaveAnAccount">
+<a>Dont have an account?</a>
+<a href="signUp.php" class="createAccountText"> Create an account</a>
+</div>
+
   </main>
 
   <footer>
@@ -87,5 +91,7 @@
   </footer>
 
   </div>
+
+  
 </body>
 </html>

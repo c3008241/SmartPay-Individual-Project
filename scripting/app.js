@@ -26,13 +26,6 @@ function calculateTotal() {
 // Log the new balance to the console
 }
 
-function paymentMethodForm(event){
-  event.preventDefault();  // Prevent form submission
-  
-  document.querySelector(".signUpItems").style.display = "none";
-  document.querySelector(".paymentMethodDetails").style.display = "block";
-}
-
 
 function changeToInt(){
   let textToNum = parseInt(document.querySelector(".changeToInt"));

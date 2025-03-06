@@ -81,13 +81,15 @@ color:white;
 }
 
 
+#countryCode{
+  padding-right:30px;
+}
+
 form{
   margin: 0 2rem;
 }
 
-.paymentMethodDetails{
-  display:none;
-}
+
 
 input{
   width: 100%;
