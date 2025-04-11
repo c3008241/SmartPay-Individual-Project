@@ -191,7 +191,7 @@ if(isset($_SESSION['email'])){
 
   
     ?>
-        <button onclick="hide()">Back</button>    
+        <button onclick="hide()" class="back">Back</button>    
 
     </div>
 
@@ -231,7 +231,8 @@ if(isset($_SESSION['email'])){
     <input type="submit" class="logInSignUp" name = "sendMoney" value="Send Money">
   </form>
 
-  <button onclick="hide()">Back</button>    
+  <button onclick="hide()" class="back">Back</button>    
+  
 
     </div>
 
@@ -266,7 +267,8 @@ if(isset($_SESSION['email'])){
     <input type="submit" class="logInSignUp" name="exchangeMoney" value="Exchange Money">
   </form>
 
-  <button onclick="hide()">Back</button>
+  <button onclick="hide()" class="back">Back</button>    
+
 </div>
 
 

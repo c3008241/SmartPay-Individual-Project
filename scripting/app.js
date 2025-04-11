@@ -19,28 +19,40 @@ a.style.display="block";
 
 
 
-
-
-
-
-function hideAccountDetails(){
+///// I created one function to hide some sections in the payment page. More efficient this way than to keep typing  the same code
+function hide(){
   a = document.querySelector(".accountDetails");
-  a = document.querySelector(".accountDetails");
+  s = document.querySelector(".sendMoney");
+  e = document.querySelector(".exchangeMoney");
   u = document.querySelector(".userBalance");
 
   u.style.display="block";
   a.style.display="none";
-}
-
-
-
-function hideSendMoney(){
-  s = document.querySelector(".sendMoney");
-  u = document.querySelector(".userBalance");
-
-  u.style.display="block";
   s.style.display="none";
+  e.style.display="none";
 }
+
+
+
+
+// function hideAccountDetails(){
+//   a = document.querySelector(".accountDetails");
+//   a = document.querySelector(".accountDetails");
+//   u = document.querySelector(".userBalance");
+
+//   u.style.display="block";
+//   a.style.display="none";
+// }
+
+
+
+// function hideSendMoney(){
+//   s = document.querySelector(".sendMoney");
+//   u = document.querySelector(".userBalance");
+
+//   u.style.display="block";
+//   s.style.display="none";
+// }
 
 
 function showSendMoney(){
