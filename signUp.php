@@ -1,53 +1,72 @@
+<?php 
+include 'connect.php';
+session_start();
 
+$isLoggedIn= false;
+
+if (isset($_SESSION['user_ID'])){
+  $isLoggedIn= true;
+  
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styling\headerAndFooter.css">
-  <link rel="stylesheet" href="styling\style.css">
-  <script src = "scripting/app.js"></script>
-  <link rel="icon" href="images/smartPayLogo.png">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <title>Register | SmartPay</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="styling/headerAndFooter.css">
+  <link rel="stylesheet" href="styling/style.css">
+  <link rel ="icon" href="images/smartPayLogo.png" >
+  <title>Sign Up | SmartPay</title>
 </head>
-
 <body>
   <div class="container">
     <header>
-      <div class="logoWrapper">
+    <div class="logoWrapper">
 
-        <a href="index.php" id="smartPayLogo">
-          <img src="images/smartPayLogo.png" height="50" width="50">
-        </a>
+      <a href="index.php" id="smartPayLogo">
+       <img src="images/smartPayLogo.png"  height="50" width="50">
+      </a>
 
-        <div class="logoText">
-          <p>SmartPay</p>
-          <p>Banking Made Simple</p>
-        </div>
+      
+      <div class="logoText">
+       <p>SmartPay</p>
+       <p>Banking Made Simple</p>
       </div>
 
-      <div class="searchBar">
-        <input class="searchBar" placeholder="Search &#x1F50E;">
-      </div>
-      <img src="images/userIcon.png" id="userIcon">
+    </div>
+
+    <div class="searchBar">
+    <input class="searchBar" placeholder="Search &#x1F50E;">
+    </div>
+    
+  
+
+  
+    
+      
+   
     </header>
-
     <nav class="navBar">
-      <ul>
-        <li><a href="index.php">HOME |</a></li>
-        <li><a href="invest.php">INVEST |</a></li>
-        <li><a href="moneyBalance.php">PAYMENTS |</a></li>
-        <li><a href="transactionHistory.php">TRANSACTION HISTORY |</a></li>
-        <li><a href="contactUs.php">CONTACT US</a></li>
-      </ul>
-    </nav>
+  <ul>
+    <li><a href="index.php">HOME |</a></li>
+    <li><a href="signUp.php">SIGN UP |</a></li>
+    <li><a href="logIn.php">LOG IN |</a></li>
 
-
+    <?php 
+    if ($isLoggedIn){
+         echo' <li><a href="invest.php">INVEST |</a></li>
+          <li><a href="moneyBalance.php">PAYMENTS |</a></li>
+          <li><a href="transactionHistory.php">TRANSACTION HISTORY |</a></li>';
+      }
+  ?>
+    <li><a href="contactUs.php">CONTACT US</a></li>
+  </ul>
+</nav>
+     
 
 
   <main>
@@ -155,14 +174,18 @@
           </div>
             <div>
 
-          <input type="submit" class="logInSignUp" id="signUp" name="register" value="Sign Up">
+          <!-- <input type="submit" class="logInSignUp" id="signUp" name="register" value="Sign Up"> -->
+
+          <input type="submit" class="logInSignUp" id="next" name="next" value="Next">
+
+
               
             
             </form>
 
       <div class="alreadyHaveAnAccount">
         <a>Already have an account?</a>
-        <a href="logIn.html" class="createAccountText"> Log in</a>
+        <a href="logIn.php" class="createAccountText"> Log in</a>
       </div>
 
 

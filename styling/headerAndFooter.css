@@ -1,4 +1,6 @@
 
+/* Header Items */
+
 
 .logoWrapper{
   display:flex;
@@ -78,8 +80,11 @@ transition:0.9s;
 
 .navBar li :hover{
 
-background-color:rgb(0, 0, 0);
+background-color:black;
 }
+
+
+/* Footer items */
 
 #copyRight{
  

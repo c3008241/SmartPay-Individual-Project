@@ -1,4 +1,7 @@
 <?php
-session_destroy();
-header("location: index.php");
+session_start(); // Start the session
+session_unset(); // Unset all session variables
+session_destroy(); // Destroy the session
+header("Location: index.php"); // Redirect to the home page
+exit(); // Ensure no further code is executed
 ?>

@@ -1,47 +1,59 @@
+<?php 
+include 'connect.php';
+session_start();
 
+$isLoggedIn= false;
+
+if (isset($_SESSION['user_ID'])){
+  $isLoggedIn= true;
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styling\headerAndFooter.css">
-  <link rel="stylesheet" href="styling\style.css">
+  <link rel="stylesheet" href="styling/headerAndFooter.css">
+  <link rel="stylesheet" href="styling/style.css">
   <link rel ="icon" href="images/smartPayLogo.png" >
-  <title>Log in | SmartPay</title>
+  <title>Log In | SmartPay</title>
 </head>
 <body>
   <div class="container">
     <header>
     <div class="logoWrapper">
 
-      <a href="homePage.html" id="smartPayLogo">
-        <img src="images/smartPayLogo.png"  height="50" width="50">
-       </a>
+      <a href="index.php" id="smartPayLogo">
+       <img src="images/smartPayLogo.png"  height="50" width="50">
+      </a>
 
+      
       <div class="logoText">
        <p>SmartPay</p>
        <p>Banking Made Simple</p>
       </div>
+
     </div>
 
     <div class="searchBar">
     <input class="searchBar" placeholder="Search &#x1F50E;">
     </div>
-    <img src="images/userIcon.png" id="userIcon">
+  
+  
+   
     </header>
-
     <nav class="navBar">
-      <ul>
-        <li><a href="index.php">HOME |</a></li>
-        <li><a href="invest.php">INVEST |</a></li>
-        <li><a href="moneyBalance.php">PAYMENTS |</a></li>
-        <li><a href="transactionHistory.php">TRANSACTION HISTORY |</a></li>
-        <li><a href="contactUs.php">CONTACT US</a></li>
-      </ul>
-    </nav>
-
-
+  <ul>
+    <li><a href="index.php">HOME |</a></li>
+    <li><a href="signUp.php">SIGN UP |</a></li>
+    <li><a href="logIn.php">LOG IN |</a></li>
+    <li><a href="contactUs.php">CONTACT US</a></li>
+  </ul>
+</nav>
+     
 
 
   <main>
@@ -66,16 +78,21 @@
       </div>
 
 <div>
+  
+  <a href="forgotPassword.php" id="forgotPassword" >Forgot Password?</a>
+
   <input type="submit" class="logInSignUp" id="logIn" name="logIn" value="Log in">
 
 </div>
 
     </form>
+
+
     </div>
     
     <div class="dontHaveAnAccount">
       <a>Don't have an account?</a>
-      <a href="signUp.html" class="createAccountText"> Create an account</a>
+      <a href="signUp.php" class="createAccountText"> Create an account</a>
       </div>
 
   </main>

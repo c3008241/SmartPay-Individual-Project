@@ -17,6 +17,7 @@ main{
 .title{
 
   margin:150px;
+  
 }
 
 .mainContent{
@@ -64,8 +65,7 @@ color:white;
   border:none;
   background-color:rgb(75, 155, 186);
   color:azure;
-  margin-left:19px;
-  margin-top:20px;
+  margin:20px;
 }
 
 
@@ -76,9 +76,6 @@ color:white;
 
 
 
-.inputGroup{
-  margin-bottom:35px;
-}
 
 
 #countryCode{
@@ -98,6 +95,7 @@ input{
   border-bottom: 1px solid grey ;
   padding:20px;
   font-size: 19px;
+
 }
 
 select{
@@ -116,3 +114,117 @@ select{
  justify-content: center;
  align-items:center;
 }
+
+#forgotPassword{
+  color:black;
+  font-style: italic;
+}
+ 
+
+.inputGroup{
+  margin-bottom:20px;
+}
+
+label{
+  font-size:20px;
+}
+
+
+
+.moneyBalanceButtons {
+  display: flex;
+  flex-direction: row; 
+  text-align:center;
+  justify-content: center;
+  margin: 0 auto;
+}
+.moneyBalanceButtons p{
+  margin:0;
+  margin-left:10px;
+  padding:10px;
+}
+
+#accounts{
+  margin-bottom:10px;
+  padding-left:10px;
+}
+
+
+.hero {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 100px 0;
+  position: relative;
+  overflow:hidden;
+  flex-direction: column; 
+}
+
+#smartPayImg{
+  position:absolute;
+z-index: -1;
+min-width: 100%;
+min-height: 100%;
+}
+
+
+
+#contactUsTitle {
+  color: white;
+  background-color: rgba(0, 0, 0, 0.741);
+  padding: 1px 10px;
+  border-radius:10px;
+}
+
+
+#accountButton{
+background-color:rgb(94, 187, 224);
+color:white;
+  margin-bottom:25px;
+  border:none;
+  border-radius:8px;
+  padding:10px;
+  font-size:17px;
+}
+
+.balanceButtons{
+}
+
+.balanceButtons p:hover{
+  cursor: pointer;
+  opacity:0.5;
+  transition: 0.3s;
+
+
+}
+
+.balanceButtons button:hover{
+  cursor: pointer;
+  opacity:0.8;
+  transition: 0.3s;
+}
+
+
+
+
+
+
+
+.accountDetails{
+  display:none;
+}
+
+
+
+.sendMoney{
+  display:none;
+}
+
+.exchangeMoney{
+  display:none;
+}
+
+
+
+

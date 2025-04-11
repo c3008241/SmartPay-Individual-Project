@@ -1,4 +1,7 @@
-
+<?php
+include "connect.php"; 
+include "encryption.php";
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -59,32 +62,48 @@
             <h1>Add Card Details</h1>
           </div>
 
-          <form  method="post" action="cardDetails.php" >
+          <form  method="post" action="register.php" >
 
 
           <div class="inputGroup">
             <i class="fas fa-dollar"></i>
             <label for="cardNumber">Card Number:</label>
-            <input type="number" class="changeToInt" id="cardNumber" name="cardNumber" 
-            placeholder="0000 0000 0000 0000 (e.g 1234 5678 9101 1121)">
+            <input type="text"  oninput="convertToInt()" class="changeToInt" name="cardNumber"  maxlength="16"     placeholder="0000 0000 0000 0000 (e.g 1234 5678 9101 1121)">
           </div>
+
+
+          <div class="inputGroup">
+            <i class="fas fa-bank"></i>
+            <label for="accountNumber">Account Number :</label>
+            <input type="text" oninput="convertToInt()" class="changeToInt"  name="accountNumber"  maxlength="8"  placeholder="00000000 (93127447)" >
+          </div>
+            
+
+          <div class="inputGroup">
+            <i class="fas fa-bank"></i>
+            <label for="sortCode">Sort code:</label>
+            <input type="text"  name="sortCode"  oninput="convertToInt()" class="changeToInt"  maxlength="6" placeholder="00-00-00 (93-12-74)" >
+          </div>
+
+         
 
           <div class="inputGroup">
             <i class="fas fa-user"></i>
             <label for="expirationDate">Expiration Date:</label>
-            <input type="date"  id="expirationDate" name="expirationDate" >
-          </div>
+            <input type="date"  name="expiraryDate" >
+          </div> 
+
 
           <div class="inputGroup">
             <i class="fas fa-bank"></i>
             <label for="cvv">CVV:</label>
-            <input type="number" id="cvv" class="changeToInt" name="cvv" required placeholder="000 (e.g 111)">
+            <input type="text" oninput="convertToInt()" class="changeToInt" maxlength="3" name="cvv"  required placeholder="000 (e.g 173)">
           </div>
           
-            
+  
 
 
-          <!-- <input type="submit" class="logInSignUp" id="signUp" name="register" value="Sign Up"> -->
+          <input type="submit" class="logInSignUp" id="signUp" name="register" value="Sign Up">
 
 
     </form>
@@ -95,7 +114,7 @@
 
       <div class="alreadyHaveAnAccount">
         <a>Already have an account?</a>
-        <a href="logIn.html" class="createAccountText"> Log in</a>
+        <a href="logIn.php" class="createAccountText"> Log in</a>
       </div>
 
     </div>
