@@ -1,14 +1,6 @@
 <?php 
 include 'connect.php';
 session_start();
-
-$isLoggedIn= false;
-
-if (isset($_SESSION['user_ID'])){
-  $isLoggedIn= true;
-  
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -55,14 +47,6 @@ if (isset($_SESSION['user_ID'])){
     <li><a href="index.php">HOME |</a></li>
     <li><a href="signUp.php">SIGN UP |</a></li>
     <li><a href="logIn.php">LOG IN |</a></li>
-
-    <?php 
-    if ($isLoggedIn){
-         echo' <li><a href="invest.php">INVEST |</a></li>
-          <li><a href="moneyBalance.php">PAYMENTS |</a></li>
-          <li><a href="transactionHistory.php">TRANSACTION HISTORY |</a></li>';
-      }
-  ?>
     <li><a href="contactUs.php">CONTACT US</a></li>
   </ul>
 </nav>
@@ -174,7 +158,6 @@ if (isset($_SESSION['user_ID'])){
           </div>
             <div>
 
-          <!-- <input type="submit" class="logInSignUp" id="signUp" name="register" value="Sign Up"> -->
 
           <input type="submit" class="logInSignUp" id="next" name="next" value="Next">
 

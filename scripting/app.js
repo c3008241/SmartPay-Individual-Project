@@ -35,26 +35,6 @@ function hide(){
 
 
 
-// function hideAccountDetails(){
-//   a = document.querySelector(".accountDetails");
-//   a = document.querySelector(".accountDetails");
-//   u = document.querySelector(".userBalance");
-
-//   u.style.display="block";
-//   a.style.display="none";
-// }
-
-
-
-// function hideSendMoney(){
-//   s = document.querySelector(".sendMoney");
-//   u = document.querySelector(".userBalance");
-
-//   u.style.display="block";
-//   s.style.display="none";
-// }
-
-
 function showSendMoney(){
   
   s = document.querySelector(".sendMoney");

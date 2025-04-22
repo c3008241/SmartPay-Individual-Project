@@ -27,6 +27,7 @@ if ($_POST['password'] == $_POST['confirmPassword']) {
  $checkEmail = "SELECT * FROM users WHERE email='$email'";
  $result = $conn->query($checkEmail);
 
+ 
  if($result->num_rows > 0){
      echo "That Email Already Exists!";
  } else{
@@ -91,7 +92,10 @@ if (isset($_POST["register"])) {
     
                     $accountQuery = "INSERT INTO accounts (user_ID, card_ID, balance) VALUES('$user_id', '$card_id' , '$initialBalance')";
                     if ($conn->query($accountQuery) === TRUE) {
-                        echo "Account created successfully!";
+                        echo "<script type='text/javascript'>
+                    window.location.href = 'index.php';
+                    alert('Account was succesffuly made!');
+                    </script>";
                         session_unset();
                         session_destroy();
                         exit();

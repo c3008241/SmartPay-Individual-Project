@@ -1,6 +1,11 @@
 <?php
 include "connect.php"; 
 include "encryption.php";
+session_start(); 
+
+
+$isLoggedIn = isset($_SESSION['email']);
+
 ?>
 
 <!DOCTYPE html>
@@ -41,16 +46,29 @@ include "encryption.php";
     </header>
 
     <nav class="navBar">
-      <ul>
-        <li><a href="index.php">HOME |</a></li>
+    <ul>
+    <?php 
+    
+    
+    
+    
+    if ($isLoggedIn) {
+        
+        echo '
         <li><a href="invest.php">INVEST |</a></li>
         <li><a href="moneyBalance.php">PAYMENTS |</a></li>
-        <li><a href="transactionHistory.php">TRANSACTION HISTORY |</a></li>
-        <li><a href="contactUs.php">CONTACT US</a></li>
-      </ul>
-    </nav>
-
-
+        <li><a href="transactionHistory.php">TRANSACTION HISTORY |</a></li>';
+    } else {
+      
+        echo '
+        <li><a href="index.php">HOME |</a></li>
+        <li><a href="signUp.php">SIGN UP |</a></li>
+        <li><a href="logIn.php">LOG IN |</a></li>';
+    }
+    ?>
+    <li><a href="contactUs.php">CONTACT US</a></li>
+    </ul>
+</nav>
 
 
   <main>

@@ -236,3 +236,22 @@ color:white;
 }
 
 
+.accountDetailsContainer label{
+
+ font-size:15px;
+
+}
+
+
+.transactionGroup h3{
+  display:flex;
+  background-color: red;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom:20px;
+}
+
+
+
+

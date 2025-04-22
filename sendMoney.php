@@ -5,56 +5,207 @@ session_start();
 include 'connect.php';
 $conn = connectDB();
 
-if (isset($_POST["sendMoney"])) {
-    $user_ID = $_SESSION['user_ID']; // Sender's user ID
-    $transactionAmount = $_POST['transactionAmount']; 
-    $accountNumber= $_SESSION['accountNumber'];
-    $sortCode= $_SESSION['sortCode'];
 
 
-    $checkAccount = "SELECT * FROM accounts WHERE accountNumber='$accountNumber' AND sortCode='$sortCode'";
-    $result = $conn->query($checkAccount);
-
-$transactionAmount = $result['transactionAmount'];
-$transactionAmount = $result['sortCode'];
-$transactionAmount = $result['accountNumber'];
-
-
-    // Check if the recipient exists in the database
-    $query = mysqli_query($conn, "SELECT * FROM users WHERE email = '$recipientEmail'");
-    $recipient = mysqli_fetch_assoc($query);
-
-    if ($recipient) {
-        $recipient_ID = $recipient['user_ID']; // Get recipient's user ID
-
-        // Check sender's balance
-        $query2 = mysqli_query($conn, "SELECT * FROM users WHERE user_ID = '$user_ID'");
-        $sender = mysqli_fetch_assoc($query2);
-
-        if ($sender['balance'] >= $transactionAmount) {
-            // Deduct amount from sender's balance
-            mysqli_query($conn, "UPDATE users SET balance = balance - $transactionAmount WHERE user_ID = '$user_ID'");
-
-            // Add amount to recipient's balance
-            mysqli_query($conn, "UPDATE users SET balance = balance + $transactionAmount WHERE user_ID = '$recipient_ID'");
-
-            // Insert transaction into the transactions table
-            $insertQuery = "INSERT INTO transactions (sender_ID, recipient_ID, amount) 
-                            VALUES ('$user_ID', '$recipient_ID', '$transactionAmount')";
-            if (mysqli_query($conn, $insertQuery)) {
-                echo "Money sent successfully!";
-            } else {
-                echo "Error recording transaction: " . mysqli_error($conn);
-            }
-        } else {
-            echo "Insufficient balance!";
-        }
-    } else {
-        echo "Recipient not found!";
+function formatCurrency($amount, $currencyID, $conn) {
+    $query = "SELECT symbol FROM currencies WHERE currency_ID = ?";
+    $stmt = $conn->prepare($query);
+    if (!$stmt) {
+        throw new Exception("Currency format prepare failed: " . $conn->error);
     }
-
+    $stmt->bind_param("i", $currencyID);
+    if (!$stmt->execute()) {
+        throw new Exception("Currency format execute failed: " . $stmt->error);
+    }
+    $result = $stmt->get_result();
+    $currency = $result->fetch_assoc();
+    $stmt->close();
+    return $currency['symbol'] . number_format($amount, 2);
 }
 
+
+if (isset($_POST["sendMoney"])) {
+    $conn = connectDB();
+    if ($conn->connect_error) {
+        die("<div class='error-message'>Database connection failed: " . $conn->connect_error . "</div>");
+    }
+
+    // Input validation
+    $accountNumber = isset($_POST['recipientAccountNumber']) ? trim($_POST['recipientAccountNumber']) : '';
+    $sortCode = isset($_POST['recipientSortCode']) ? trim($_POST['recipientSortCode']) : '';
+    $amount = isset($_POST['amount']) ? floatval($_POST['amount']) : 0;
+    $senderId = isset($_SESSION['user_ID']) ? $_SESSION['user_ID'] : null;
+
+    // Validate inputs
+    if (empty($accountNumber) || empty($sortCode) || $amount <= 0 || empty($senderId)) {
+        die("<div class='error-message'>Please fill all fields correctly.</div>");
+    }
+
+    $stmt = null; // Initialize statement variable
+
+    try {
+        // 1. Get sender's account details with currency
+        $senderQuery = "SELECT a.account_ID, a.balance, cu.currency_ID 
+                       FROM users u
+                       INNER JOIN accounts a ON u.user_ID = a.user_ID
+                       INNER JOIN cards c ON a.card_ID = c.card_ID
+                       INNER JOIN currencies cu ON c.currency_ID = cu.currency_ID
+                       WHERE u.user_id = ?";
+        $stmt = $conn->prepare($senderQuery);
+        if ($stmt === false) {
+            throw new Exception("Prepare failed: " . $conn->error);
+        }
+        
+        if (!$stmt->bind_param("i", $senderId)) {
+            throw new Exception("Bind failed: " . $stmt->error);
+        }
+        
+        if (!$stmt->execute()) {
+            throw new Exception("Execute failed: " . $stmt->error);
+        }
+
+        $senderResult = $stmt->get_result();
+        if ($senderResult->num_rows === 0) {
+            throw new Exception("Sender account not found.");
+        }
+
+        $sender = $senderResult->fetch_assoc();
+        $senderAccountId = $sender['account_ID'];
+        $senderBalance = $sender['balance'];
+        $senderCurrency = $sender['currency_ID'];
+        $stmt->close(); // Close the statement after use
+
+        // 2. Check if sender has sufficient funds
+        if ($senderBalance < $amount) {
+            $formattedBalance = formatCurrency($senderBalance, $senderCurrency, $conn);
+            throw new Exception("Insufficient funds. Your balance: $formattedBalance");
+        }
+
+        // 3. Find recipient's account with matching currency
+        $recipientQuery = "SELECT a.account_ID, u.user_ID, a.balance, cu.currency_ID
+                          FROM users u
+                          INNER JOIN accounts a ON u.user_ID = a.user_ID
+                          INNER JOIN cards c ON a.card_ID = c.card_ID
+                          INNER JOIN currencies cu ON c.currency_ID = cu.currency_ID
+                          WHERE c.accountNumber = ?
+                          AND c.sortCode = ?
+                          AND cu.currency_ID = ?";
+        
+        $stmt = $conn->prepare($recipientQuery);
+        if ($stmt === false) {
+            throw new Exception("Recipient prepare failed: " . $conn->error);
+        }
+        
+        if (!$stmt->bind_param("ssi", $accountNumber, $sortCode, $senderCurrency)) {
+            throw new Exception("Recipient bind failed: " . $stmt->error);
+        }
+        
+        if (!$stmt->execute()) {
+            throw new Exception("Recipient execute failed: " . $stmt->error);
+        }
+
+        $recipientResult = $stmt->get_result();
+        if ($recipientResult->num_rows === 0) {
+            throw new Exception("No account found with those details or currency mismatch.");
+        }
+
+        $recipient = $recipientResult->fetch_assoc();
+        $recipientAccountId = $recipient['account_ID'];
+        $recipientUserId = $recipient['user_ID'];
+        $recipientBalance = $recipient['balance'];
+        $stmt->close(); // Close the statement after use
+
+        // 4. Perform the transfer (transaction)
+        $conn->begin_transaction();
+
+        // Deduct from sender
+        $updateSender = "UPDATE accounts SET balance = balance - ? WHERE account_ID = ?";
+        $stmt = $conn->prepare($updateSender);
+        if ($stmt === false) {
+            throw new Exception("Sender update prepare failed: " . $conn->error);
+        }
+        if (!$stmt->bind_param("di", $amount, $senderAccountId)) {
+            throw new Exception("Sender update bind failed: " . $stmt->error);
+        }
+        if (!$stmt->execute()) {
+            throw new Exception("Sender update execute failed: " . $stmt->error);
+        }
+        $stmt->close();
+
+        // Add to recipient
+        $updateRecipient = "UPDATE accounts SET balance = balance + ? WHERE account_ID = ?";
+        $stmt = $conn->prepare($updateRecipient);
+        if ($stmt === false) {
+            throw new Exception("Recipient update prepare failed: " . $conn->error);
+        }
+        if (!$stmt->bind_param("di", $amount, $recipientAccountId)) {
+            throw new Exception("Recipient update bind failed: " . $stmt->error);
+        }
+        if (!$stmt->execute()) {
+            throw new Exception("Recipient update execute failed: " . $stmt->error);
+        }
+        $stmt->close();
+
+// Record transaction
+$transactionQuery = "INSERT INTO transactions 
+(sender_id, recipient_id, amount, currencyID, transaction_date, status)
+VALUES (?, ?, ?, ?, NOW(), 'completed')";
+
+$stmt = $conn->prepare($transactionQuery);
+if ($stmt === false) {
+    throw new Exception("Transaction prepare failed: " . $conn->error);
+}
+
+if (!$stmt->bind_param("iidd", $senderId, $recipientUserId, $amount, $senderCurrency)) {
+    throw new Exception("Transaction bind failed: " . $stmt->error);
+}
+
+if (!$stmt->execute()) {
+    throw new Exception("Transaction execute failed: " . $stmt->error);
+}
+$stmt->close();
+
+$conn->commit();
+
+// Store transaction details in session for receipt
+$_SESSION['receipt_data'] = [
+    'amount' => $amount,
+    'currency_id' => $senderCurrency,
+    'recipient_account' => $accountNumber,
+    'recipient_sortcode' => $sortCode,
+    'new_balance' => $senderBalance - $amount
+];
+
+// Get recipient's full name for the receipt
+$recipientNameQuery = "SELECT firstName, lastName FROM users WHERE user_ID = ?";
+$stmt = $conn->prepare($recipientNameQuery);
+$stmt->bind_param("i", $recipientUserId);
+$stmt->execute();
+$recipientNameResult = $stmt->get_result();
+$recipientName = $recipientNameResult->fetch_assoc();
+$stmt->close();
+
+$_SESSION['receipt_data']['recipient_name'] = $recipientName['firstName'] . ' ' . $recipientName['lastName'];
+
+// Redirect to receipt page
+header("Location: reviewTransfer.php");
+exit();
+
+
+    } catch (Exception $e) {
+        if ($conn && $conn->connect_errno === 0 && $conn->thread_id) {
+            $conn->rollback();
+        }
+        die("<div class='error-message'>Transfer failed: " . htmlspecialchars($e->getMessage()) . "</div>");
+    } finally {
+        // Only try to close if $stmt exists and is a valid statement object
+        if (isset($stmt) && is_object($stmt) && get_class($stmt) === 'mysqli_stmt') {
+        }
+        if ($conn) {
+            $conn->close();
+        }
+    }
+}
 
 
 
