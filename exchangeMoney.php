@@ -54,7 +54,12 @@ if (isset($_POST['exchangeMoney'])) {
                 }
 
                 $conn->commit();
-                echo "Exchange successful! Your new balance is " . number_format($convertedAmount, 2) . " $targetCurrency.";
+
+                echo "<script>
+                alert('Exchange complete');
+                window.location.href = 'moneyBalance.php';
+                </script>";
+
             } catch (Exception $e) {
                 $conn->rollback();
                 echo "Error during exchange: " . $e->getMessage();

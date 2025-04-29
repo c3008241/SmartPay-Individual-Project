@@ -14,8 +14,8 @@ $isLoggedIn = isset($_SESSION['email']);
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styling\headerAndFooter.css">
-  <link rel="stylesheet" href="styling\style.css">
+  <link rel="stylesheet" href="styling/headerAndFooter.css">
+  <link rel="stylesheet" href="styling/style.css">
   <script src = "scripting/app.js"></script>
   <link rel="icon" href="images/smartPayLogo.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"

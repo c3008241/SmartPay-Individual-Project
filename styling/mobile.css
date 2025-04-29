@@ -1,0 +1,105 @@
+@media (max-width:720px) {
+
+
+.navBar a{
+font-size: 11px;
+padding:20px;
+  }
+
+input{
+  padding:10px;
+  margin:0px;
+  margin-bottom:30px;
+}
+
+
+#countryCode{
+  margin-bottom:30px;
+}
+
+#next{
+  margin:0;
+}
+
+.logInSignUp{
+  margin:0;
+  margin-top:35px;
+}
+
+  main{
+    margin:0;
+    padding:0px;
+  }
+
+
+  .title{
+    font-size: 12px;
+    width:50%;
+    text-align: center;
+    margin:100px;
+   
+  }
+
+
+  #copyRight{
+    text-align: center;
+    padding:10px;
+    margin:0;
+  }
+
+.mainContent{
+  display: flex;
+  flex-direction: column;
+}
+
+.smartPayEmails{
+   display:none;
+
+}
+
+.dontHaveAnAccount{
+
+  margin-bottom:20px;
+ 
+} 
+
+.alreadyHaveAnAccount{
+  margin-bottom:20px;
+}
+
+
+
+.hero{
+padding:200px  100px;;
+}
+
+header{
+ padding:0;
+}
+
+
+.logoWrapper{
+  margin:10px;
+}
+
+.searchBar{
+  margin:0;
+  padding:0;
+}
+
+.userBalance{
+  padding:150px;
+  text-align:center;
+}
+
+.back{
+  margin-top:20px;
+  margin-bottom:20px;
+}
+
+
+
+
+
+}
+

@@ -11,6 +11,7 @@ session_start();
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link rel="stylesheet" href="styling/headerAndFooter.css">
   <link rel="stylesheet" href="styling/style.css">
+  <link rel="stylesheet" href="styling/mobile.css">
   <link rel ="icon" href="images/smartPayLogo.png" >
   <title>Sign Up | SmartPay</title>
 </head>
@@ -167,9 +168,9 @@ session_start();
             </form>
 
       <div class="alreadyHaveAnAccount">
-        <a>Already have an account?</a>
-        <a href="logIn.php" class="createAccountText"> Log in</a>
-      </div>
+        <a>Already have an account? <span> <a href="logIn.php" class="createAccountText"> Log in</a></span> </a>
+       
+      </div> 
 
 
 

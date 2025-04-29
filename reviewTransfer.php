@@ -41,13 +41,6 @@ $formattedBalance = formatCurrency($receiptData['new_balance'], $receiptData['cu
 // Clear receipt data after displaying
 unset($_SESSION['receipt_data']);
 
-
-
-
-
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -57,6 +50,8 @@ unset($_SESSION['receipt_data']);
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styling/headerAndFooter.css">
   <link rel="stylesheet" href="styling/style.css">
+  <link rel="stylesheet" href="styling/reciept.css">
+
   <link rel ="icon" href="images/smartPayLogo.png" >
   <title>Review Reciept | SmartPay</title>
 </head>
@@ -122,23 +117,33 @@ unset($_SESSION['receipt_data']);
             <span class="receipt-label">Recipient Name:</span>
             <span class="receipt-value"><?php echo htmlspecialchars($receiptData['recipient_name']); ?></span>
           </div>
+            <br>
           <div class="receipt-row">
             <span class="receipt-label">Account Number:</span>
             <span class="receipt-value"><?php echo htmlspecialchars($receiptData['recipient_account']); ?></span>
           </div>
+          <br>
+
           <div class="receipt-row">
             <span class="receipt-label">Sort Code:</span>
             <span class="receipt-value"><?php echo htmlspecialchars($receiptData['recipient_sortcode']); ?></span>
           </div>
+          <br>
+
           <div class="receipt-row">
             <span class="receipt-label">New Balance:</span>
             <span class="receipt-value"><?php echo $formattedBalance; ?></span>
           </div>
+          <br>
+
           <div class="receipt-row">
             <span class="receipt-label">Date:</span>
             <span class="receipt-value"><?php echo date('Y-m-d H:i:s'); ?></span>
           </div>
         </div>
+        <br>
+        <br>
+
         
         <div class="receipt-actions">
           <a href="moneyBalance.php" class="btn btn-primary">Make Another Transfer</a>

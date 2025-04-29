@@ -55,5 +55,27 @@ function showSendMoney(){
 
 
 
+    // function showLogOut() {
+    //   l = document.getElementById('logOut');
+
+    //   l.style.display="block";
+    // }
+
+    function showLogOut() {
+      const l = document.getElementById('logOut');
+      if (l.style.display === "none" || l.style.display === "") {
+        l.style.display = "block"; // Show the userNav
+      } else {
+        l.style.display = "none"; // Hide the userNav
+      }
+    }
+ 
+
+
+
+
+
+
+
 
 

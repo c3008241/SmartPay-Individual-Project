@@ -188,7 +188,10 @@ $stmt->close();
 $_SESSION['receipt_data']['recipient_name'] = $recipientName['firstName'] . ' ' . $recipientName['lastName'];
 
 // Redirect to receipt page
-header("Location: reviewTransfer.php");
+echo "<script>
+        alert('Transaction successful!');
+        window.location.href = 'reviewTransfer.php';
+      </script>";
 exit();
 
 

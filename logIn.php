@@ -1,14 +1,4 @@
-<?php 
-include 'connect.php';
-session_start();
 
-$isLoggedIn= false;
-
-if (isset($_SESSION['user_ID'])){
-  $isLoggedIn= true;
-}
-
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,6 +8,7 @@ if (isset($_SESSION['user_ID'])){
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styling/headerAndFooter.css">
   <link rel="stylesheet" href="styling/style.css">
+  <link rel="stylesheet" href="styling/mobile.css">
   <link rel ="icon" href="images/smartPayLogo.png" >
   <title>Log In | SmartPay</title>
 </head>

@@ -19,6 +19,8 @@ if (isset($_SESSION['user_ID'])){
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styling/headerAndFooter.css">
   <link rel="stylesheet" href="styling/style.css">
+  <link rel="stylesheet" href="styling/mobile.css">
+  <script src = "scripting/app.js"></script>
   <link rel ="icon" href="images/smartPayLogo.png" >
   <title>Contact Us | SmartPay</title>
 </head>
@@ -43,19 +45,21 @@ if (isset($_SESSION['user_ID'])){
     <input class="searchBar" placeholder="Search &#x1F50E;">
     </div>
     
-    <img src="images/userIcon.png" id="userIcon">
-    <?php
-    if ($isLoggedIn){
-      echo '<a href="logOut.php" id="logOut">Log Out</a>';
-    } else {
-      echo '<a href="logIn.php" id="logIn">Log In</a>';
-    }
-    ?>
+    <nav class = "userNav"> 
+    <ul>
+      <li>
+    <img src="images/userIcon.png"  onclick="showLogOut()" id="userIcon"  height="43" width="50">
+      </li>
+      <li>
+        <a href="moneyBalance.php"> ACCOUNT</a>
+      </li>
+      <li>
+        <a id="logOut" href="logOut.php"> LOG OUT</a>
+      </li>
 
-  
-    
-      
-   
+    </ul>
+  </nav>
+
     </header>
     <nav class="navBar">
   <ul>
@@ -68,27 +72,36 @@ if (isset($_SESSION['user_ID'])){
     else{
     echo'<li><a href="invest.php">INVEST |</a></li>
     <li><a href="moneyBalance.php">PAYMENTS |</a></li>
-    <li><a href="transactionHistory.php">TRANSACTION HISTORY |</a></li>';
+    <li><a href="transactionHistory.php">TRANSACTION HISTORY |</a></li>
+    ';
     }
    ?>
 
 
-    <li><a href="contactUs.php">CONTACT US</a></li>
+    <li><a href="contactUs.php">CONTACT US |</a></li>
+
+  
   </ul>
 </nav>
+
      
 <div class="hero">
-
-  <main>
-    <div id="contactUsTitle">
-      <h1>Contact Us</h1>
+  <div id="contactUsTitle">
+    <h1>Contact Us</h1>
+    <p>Have questions, suggestions, or issues? We're here to help! Reach out to our support team anytime.</p>
+    
+    <div class="contactDetails">
+      <p><strong>Email:</strong> <a href="mailto:support@smartpay.com">support@smartpay.com</a></p>
+      <p><strong>Phone:</strong> <a href="tel:+1234567890">+1 (234) 567-890</a></p>
+      <p><strong>Live Chat:</strong> Available Monday to Friday, 9am - 5pm (GMT)</p>
     </div>
 
- 
+    <div class="ctaMessage">
+      <p>We usually respond within 24 hours. Your satisfaction is our priority!</p>
+    </div>
+  </div>
 
-  </main>
-  <img id="smartPayImg" src="images/smartPayImg.jpg" alt="">
-
+  <img id="smartPayImg" src="images/smartPayImg.jpg" alt="SmartPay Team">
 </div>
 
   <footer>

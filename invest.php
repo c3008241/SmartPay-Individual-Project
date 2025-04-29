@@ -28,6 +28,8 @@ checkSession ($path); //calling the function from session.php
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link rel="stylesheet" href="styling/headerAndFooter.css">
   <link rel="stylesheet" href="styling/style.css">
+  <link rel="stylesheet" href="styling/mobile.css">
+  <script src = "scripting/app.js"></script>
   <link rel ="icon" href="images/smartPayLogo.png" >
   <title>Invest | SmartPay</title>
 </head>
@@ -49,12 +51,24 @@ checkSession ($path); //calling the function from session.php
     <div class="searchBar">
     <input class="searchBar" placeholder="Search &#x1F50E;">
     </div>
-    <img src="images/userIcon.png" id="userIcon">
-
-   
-
-     <a href="logOut.php" > Log out</a>
     
+
+    <nav class = "userNav"> 
+    <ul>
+      <li>
+    <img src="images/userIcon.png"  onclick="showLogOut()" id="userIcon"  height="43" width="50">
+      </li>
+      <li>
+        <a href="moneyBalance.php"> ACCOUNT</a>
+      </li>
+      <li>
+        <a id="logOut" href="logOut.php"> LOG OUT</a>
+      </li>
+
+    </ul>
+  </nav>
+
+     
     </header>
 
     

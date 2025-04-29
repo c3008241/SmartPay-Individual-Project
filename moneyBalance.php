@@ -17,7 +17,6 @@ if (!isset($_SESSION['user_ID'])){
 }
 
 $user_ID = $_SESSION['user_ID'];
-// $query = mysqli_query($conn, "SELECT * FROM users WHERE user_ID = $user_ID" );
 
 $query = mysqli_query($conn, "SELECT *
                     FROM users AS u
@@ -35,18 +34,12 @@ $result = mysqli_fetch_assoc($query);
 $userType = $result['userType'];
 $firstName = $result['firstName'];
 $lastName = $result['lastName'];
-$email = $result['email']; //this value is obtained from the login page when the user is verified
+$email = $result['email']; 
  
 
-checkSession ($path); //calling the function from session.php
+checkSession ($path); 
 
 
-// if (!isset($_SESSION['userType']) || $_SESSION['userType'] !== 'Business Owner') {
-//  echo"you are not a business owner"; 
-// }
-// else{
-//   echo" you are  a business owner";
-// }
 
 ?>
 
@@ -57,6 +50,7 @@ checkSession ($path); //calling the function from session.php
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styling/headerAndFooter.css">
   <link rel="stylesheet" href="styling/style.css">
+  <link rel="stylesheet" href="styling/mobile.css">
   <script src = "scripting/app.js"></script>
   <link rel ="icon" href="images/smartPayLogo.png" >
   <title> Balance | SmartPay</title>
@@ -79,16 +73,23 @@ checkSession ($path); //calling the function from session.php
     <div class="searchBar">
     <input class="searchBar" placeholder="Search &#x1F50E;">
     </div>
-    <img src="images/userIcon.png" id="userIcon">
 
-    <?php 
+<nav class = "userNav"> 
+    <ul>
+      <li>
+    <img src="images/userIcon.png"  onclick="showLogOut()" id="userIcon"  height="43" width="50">
+      </li>
+      <li>
+        <a href="moneyBalance.php"> ACCOUNT</a>
+      </li>
+      <li>
+        <a id="logOut" href="logOut.php"> LOG OUT</a>
+      </li>
 
-    if($email){
-      echo '<a href="logOut.php">Log Out</a>';
-    }
-    
-    ?>
+    </ul>
+  </nav>
 
+  
 
     </header>
 
@@ -103,8 +104,7 @@ checkSession ($path); //calling the function from session.php
 
 
 
-
-  <main>
+<main>
 
 
     
@@ -317,14 +317,7 @@ if($email){
   <button onclick="hide()" class="back">Back</button>    
 
 </div>
-
-
-
-
-
-  
-   
-  </main>
+    </main>
 
   <footer>
     <div class="footerItems">

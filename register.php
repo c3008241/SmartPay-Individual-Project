@@ -20,7 +20,10 @@ if (isset($_POST["next"])){
 if ($_POST['password'] == $_POST['confirmPassword']) {
      $password = encrypt($_POST['password'], "cat");
  } else {
-     echo "Passwords do not match!";
+    echo "<script>
+    alert('Passwords don't match.');
+    window.location.href = 'signUp.php';
+    </script>";
      exit();
  }
 
@@ -29,7 +32,10 @@ if ($_POST['password'] == $_POST['confirmPassword']) {
 
  
  if($result->num_rows > 0){
-     echo "That Email Already Exists!";
+    echo "<script>
+    alert('That email already exists!');
+    window.location.href = 'signUp.php';
+    </script>";
  } else{
 
     $_SESSION['prefix'] = $prefix;
@@ -82,7 +88,10 @@ if (isset($_POST["register"])) {
             $checkCardUnique = "SELECT * FROM cards WHERE cardNumber='$cardNumber' AND accountNumber='$accountNumber'";
             $cardResult = $conn->query($checkCardUnique);
             if ($cardResult->num_rows > 0) {  
-                echo "That Card Already Exists!";
+                echo "<script>
+                alert('That card already exists!');
+                window.location.href = 'cardDetails.php';
+                </script>";
             } else {
                 $cardQuery = "INSERT INTO cards (cardNumber, accountNumber, sortCode, expiraryDate, cvv, currency_ID)
                               VALUES('$cardNumber', '$accountNumber', '$sortCode', '$expiraryDate', '$cvv' , '$currency_ID')";
@@ -93,7 +102,7 @@ if (isset($_POST["register"])) {
                     $accountQuery = "INSERT INTO accounts (user_ID, card_ID, balance) VALUES('$user_id', '$card_id' , '$initialBalance')";
                     if ($conn->query($accountQuery) === TRUE) {
                         echo "<script type='text/javascript'>
-                    window.location.href = 'index.php';
+                    window.location.href = 'logIn.php';
                     alert('Account was succesffuly made!');
                     </script>";
                         session_unset();
@@ -134,7 +143,10 @@ if (mysqli_num_rows($query) == 1) {
     header("Location: moneyBalance.php");
     exit();
 } else {
-    echo "Invalid email or password.";
+    echo "<script>
+    alert('Invalid email or password.');
+    window.location.href = 'logIn.php';
+    </script>";
 }
 
 }
