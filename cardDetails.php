@@ -6,6 +6,10 @@ session_start();
 
 $isLoggedIn = isset($_SESSION['email']);
 
+
+
+
+
 ?>
 
 <!DOCTYPE html>

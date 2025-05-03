@@ -40,12 +40,14 @@ if ($result->num_rows > 0) {
             'fullName' => $row['firstName'] . ' ' . $row['lastName'],
             'recipientFullName' => $row['recipientFirstName'] . ' ' . $row['recipientLastName'],
             'recipientEmail' => $row['recipientEmail'],
-            'amount' => $row['amount'],
+            'amount' => $row['symbol']. ' ' .$row['amount'],
             'status' => $row['status'],
+            'currencyCode' => $row['currencyCode'],
             'transaction_date' => $row['transaction_date']
             
         ];
         $transactions[] = $transaction;
+        $userType = $row['userType'];
     }
 }
 ?>
@@ -62,7 +64,6 @@ if ($result->num_rows > 0) {
   <link rel="icon" href="images/smartPayLogo.png">
   <title>Transaction History | SmartPay</title>
   <style>
-    /* You can move this to style.css later */
     table.transactionTable {
       width: 100%;
       border-collapse: collapse;
@@ -78,7 +79,7 @@ if ($result->num_rows > 0) {
       font-weight: bold;
     }
     .transactionGroup {
-      overflow-x: auto; /* To make table scroll on mobile */
+      overflow-x: auto; 
     }
   </style>
 </head>
@@ -117,7 +118,12 @@ if ($result->num_rows > 0) {
 
     <nav class="navBar">
       <ul>
-        <li><a href="invest.php">INVEST |</a></li>
+        <?php 
+          if($userType == 'Business Owner') {
+          echo'<li><a href="invest.php">INVEST |</a></li>';
+         } 
+        ?>
+
         <li><a href="moneyBalance.php">PAYMENTS |</a></li>
         <li><a href="transactionHistory.php">TRANSACTION HISTORY |</a></li>
         <li><a href="contactUs.php">CONTACT US</a></li>
@@ -140,6 +146,7 @@ if ($result->num_rows > 0) {
           echo "<th>Recipient Email</th>";
           echo "<th>Amount</th>";
           echo "<th>Status</th>";
+          echo "<th>Currency</th>";
           echo "<th>Transaction Date</th>";
           echo "</tr>";
           echo "</thead>";
@@ -149,8 +156,9 @@ if ($result->num_rows > 0) {
            
             echo "<td>" . htmlspecialchars($transaction['recipientFullName']) . "</td>";
             echo "<td>" . htmlspecialchars($transaction['recipientEmail']) . "</td>";
-            echo "<td>$" . htmlspecialchars($transaction['amount']) . "</td>";
-            echo "<td>$" . htmlspecialchars($transaction['status']) . "</td>";
+            echo "<td>" . htmlspecialchars($transaction['amount']) . "</td>";
+            echo "<td>" . htmlspecialchars($transaction['status']) . "</td>";
+            echo "<td>" . htmlspecialchars($transaction['currencyCode']) . "</td>";
             echo "<td>" . htmlspecialchars($transaction['transaction_date']) . "</td>";
             echo "</tr>";
           }
@@ -161,6 +169,15 @@ if ($result->num_rows > 0) {
         }
         ?>
       </div>
+
+
+      <br>
+      <br>
+
+
+      <a href="moneyBalance.php">
+      <button class= "back" >Back to Accounts</button>
+      </a>
     </main>
 
     <footer>

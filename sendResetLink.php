@@ -4,7 +4,7 @@
 
 
 
-// ----------------This Function would need a google API key to work--------------------- //
+// ----------------This Function may need a google API key to work or a google account with app passwords enabled--------------------- //
 
 
 
@@ -18,7 +18,6 @@ require 'vendor/autoload.php';
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = $_POST['email'];
 
-    // Validate the email
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         die("Invalid email address");
     }
@@ -47,20 +46,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $mail = new PHPMailer(true);
         try {
-            // Server settings
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = 'your-email@gmail.com'; // Your Gmail address
-            $mail->Password = 'your-app-password'; // Your App Password
+            $mail->Username = 'your-email@gmail.com'; 
+            $mail->Password = 'your-app-password'; 
             $mail->SMTPSecure = 'tls';
             $mail->Port = 587;
 
-            // Recipients
             $mail->setFrom('no-reply@smartpay.com', 'SmartPay');
             $mail->addAddress($email);
 
-            // Content
             $mail->isHTML(true);
             $mail->Subject = $subject;
             $mail->Body    = $message;

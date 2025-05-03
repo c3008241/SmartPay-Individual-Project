@@ -30,21 +30,18 @@ if (isset($_POST["sendMoney"])) {
         die("<div class='error-message'>Database connection failed: " . $conn->connect_error . "</div>");
     }
 
-    // Input validation
     $accountNumber = isset($_POST['recipientAccountNumber']) ? trim($_POST['recipientAccountNumber']) : '';
     $sortCode = isset($_POST['recipientSortCode']) ? trim($_POST['recipientSortCode']) : '';
     $amount = isset($_POST['amount']) ? floatval($_POST['amount']) : 0;
     $senderId = isset($_SESSION['user_ID']) ? $_SESSION['user_ID'] : null;
 
-    // Validate inputs
     if (empty($accountNumber) || empty($sortCode) || $amount <= 0 || empty($senderId)) {
         die("<div class='error-message'>Please fill all fields correctly.</div>");
     }
 
-    $stmt = null; // Initialize statement variable
+    $stmt = null; 
 
     try {
-        // 1. Get sender's account details with currency
         $senderQuery = "SELECT a.account_ID, a.balance, cu.currency_ID 
                        FROM users u
                        INNER JOIN accounts a ON u.user_ID = a.user_ID
@@ -73,15 +70,20 @@ if (isset($_POST["sendMoney"])) {
         $senderAccountId = $sender['account_ID'];
         $senderBalance = $sender['balance'];
         $senderCurrency = $sender['currency_ID'];
-        $stmt->close(); // Close the statement after use
+        $stmt->close(); 
 
-        // 2. Check if sender has sufficient funds
+
         if ($senderBalance < $amount) {
             $formattedBalance = formatCurrency($senderBalance, $senderCurrency, $conn);
             throw new Exception("Insufficient funds. Your balance: $formattedBalance");
+            echo "<script>
+            alert('Insufficient funds. Your balance: $formattedBalance');
+            window.location.href = 'moneyBalance.php';
+            </script>";
+exit();
         }
 
-        // 3. Find recipient's account with matching currency
+
         $recipientQuery = "SELECT a.account_ID, u.user_ID, a.balance, cu.currency_ID
                           FROM users u
                           INNER JOIN accounts a ON u.user_ID = a.user_ID
@@ -106,19 +108,24 @@ if (isset($_POST["sendMoney"])) {
 
         $recipientResult = $stmt->get_result();
         if ($recipientResult->num_rows === 0) {
-            throw new Exception("No account found with those details or currency mismatch.");
+            echo "<script>
+            alert('Wrong card user details or currency mismatch!');
+            window.location.href = 'moneyBalance.php';
+          </script>";
+    exit();
         }
 
         $recipient = $recipientResult->fetch_assoc();
         $recipientAccountId = $recipient['account_ID'];
         $recipientUserId = $recipient['user_ID'];
         $recipientBalance = $recipient['balance'];
-        $stmt->close(); // Close the statement after use
+        $stmt->close(); 
 
-        // 4. Perform the transfer (transaction)
+
         $conn->begin_transaction();
 
-        // Deduct from sender
+
+
         $updateSender = "UPDATE accounts SET balance = balance - ? WHERE account_ID = ?";
         $stmt = $conn->prepare($updateSender);
         if ($stmt === false) {
@@ -132,7 +139,8 @@ if (isset($_POST["sendMoney"])) {
         }
         $stmt->close();
 
-        // Add to recipient
+
+
         $updateRecipient = "UPDATE accounts SET balance = balance + ? WHERE account_ID = ?";
         $stmt = $conn->prepare($updateRecipient);
         if ($stmt === false) {
@@ -146,7 +154,6 @@ if (isset($_POST["sendMoney"])) {
         }
         $stmt->close();
 
-// Record transaction
 $transactionQuery = "INSERT INTO transactions 
 (sender_id, recipient_id, amount, currencyID, transaction_date, status)
 VALUES (?, ?, ?, ?, NOW(), 'completed')";
@@ -167,16 +174,15 @@ $stmt->close();
 
 $conn->commit();
 
-// Store transaction details in session for receipt
 $_SESSION['receipt_data'] = [
     'amount' => $amount,
     'currency_id' => $senderCurrency,
     'recipient_account' => $accountNumber,
     'recipient_sortcode' => $sortCode,
-    'new_balance' => $senderBalance - $amount
+    'new_balance' => round($senderBalance - $amount, 2)
+
 ];
 
-// Get recipient's full name for the receipt
 $recipientNameQuery = "SELECT firstName, lastName FROM users WHERE user_ID = ?";
 $stmt = $conn->prepare($recipientNameQuery);
 $stmt->bind_param("i", $recipientUserId);
@@ -187,7 +193,6 @@ $stmt->close();
 
 $_SESSION['receipt_data']['recipient_name'] = $recipientName['firstName'] . ' ' . $recipientName['lastName'];
 
-// Redirect to receipt page
 echo "<script>
         alert('Transaction successful!');
         window.location.href = 'reviewTransfer.php';
@@ -201,7 +206,6 @@ exit();
         }
         die("<div class='error-message'>Transfer failed: " . htmlspecialchars($e->getMessage()) . "</div>");
     } finally {
-        // Only try to close if $stmt exists and is a valid statement object
         if (isset($stmt) && is_object($stmt) && get_class($stmt) === 'mysqli_stmt') {
         }
         if ($conn) {

@@ -56,69 +56,234 @@ if ($_POST['password'] == $_POST['confirmPassword']) {
 
 
 
+//-----------the OG one------------------------//
+// if (isset($_POST["register"])) {
 
-if (isset($_POST["register"])) {
-
-    $prefix = $_SESSION['prefix'];
-    $firstName = $_SESSION['firstName'];
-    $lastName = $_SESSION['lastName'];
-    $userType = $_SESSION['userType'];
-    $email = $_SESSION['email'];
-    $countryCode= $_SESSION['countryCode'];
-    $mobileNumber = $_SESSION['mobileNumber'];
-    $password = $_SESSION['password'];
+//     $prefix = $_SESSION['prefix'];
+//     $firstName = $_SESSION['firstName'];
+//     $lastName = $_SESSION['lastName'];
+//     $userType = $_SESSION['userType'];
+//     $email = $_SESSION['email'];
+//     $countryCode= $_SESSION['countryCode'];
+//     $mobileNumber = $_SESSION['mobileNumber'];
+//     $password = $_SESSION['password'];
     
 
-        $insertQuery = "INSERT INTO users (prefix, firstName, lastName, userType, email, countryCode, mobileNumber, password)
-                        VALUES('$prefix', '$firstName', '$lastName', '$userType', '$email', '$countryCode', '$mobileNumber', '$password')";
-        if ($conn->query($insertQuery) === TRUE) {
+//         $insertQuery = "INSERT INTO users (prefix, firstName, lastName, userType, email, countryCode, mobileNumber, password)
+//                         VALUES('$prefix', '$firstName', '$lastName', '$userType', '$email', '$countryCode', '$mobileNumber', '$password')";
+//         if ($conn->query($insertQuery) === TRUE) {
             
-            $user_id = $conn-> insert_id;
+//             $user_id = $conn-> insert_id;
 
-            // $cardNumber = encrypt($_POST['cardNumber'], "cat");
-            // $accountNumber = encrypt($_POST['accountNumber'], "cat");
+//             // $cardNumber = encrypt($_POST['cardNumber'], "cat");
+//             // $accountNumber = encrypt($_POST['accountNumber'], "cat");
             
-            $cardNumber = $_POST['cardNumber'];
-            $accountNumber = $_POST['accountNumber'];
-            $sortCode = $_POST['sortCode'];
-            $expiraryDate = $_POST['expiraryDate'];
-            $cvv = $_POST['cvv'];
-            $currency_ID = 1;
+//             $cardNumber = $_POST['cardNumber'];
+//             $accountNumber = $_POST['accountNumber'];
+//             $sortCode = $_POST['sortCode'];
+//             $expiraryDate = $_POST['expiraryDate'];
+//             $cvv = $_POST['cvv'];
+//             $currency_ID = 1;
 
-            $checkCardUnique = "SELECT * FROM cards WHERE cardNumber='$cardNumber' AND accountNumber='$accountNumber'";
-            $cardResult = $conn->query($checkCardUnique);
-            if ($cardResult->num_rows > 0) {  
-                echo "<script>
-                alert('That card already exists!');
-                window.location.href = 'cardDetails.php';
-                </script>";
-            } else {
-                $cardQuery = "INSERT INTO cards (cardNumber, accountNumber, sortCode, expiraryDate, cvv, currency_ID)
-                              VALUES('$cardNumber', '$accountNumber', '$sortCode', '$expiraryDate', '$cvv' , '$currency_ID')";
-                if ($conn->query($cardQuery) === TRUE) {
-                    $card_id = $conn->insert_id;
-                    $initialBalance = 1000; // Store a default sample balance of 1000 in the account, normally banking websites like these wouldn't do this.
+//             $checkCardUnique = "SELECT * FROM cards WHERE cardNumber='$cardNumber' AND accountNumber='$accountNumber'";
+//             $cardResult = $conn->query($checkCardUnique);
+//             if ($cardResult->num_rows > 0) {  
+//                 echo "<script>
+//                 alert('That card already exists!');
+//                 window.location.href = 'cardDetails.php';
+//                 </script>";
+//             } else {
+//                 $cardQuery = "INSERT INTO cards (cardNumber, accountNumber, sortCode, expiraryDate, cvv, currency_ID)
+//                               VALUES('$cardNumber', '$accountNumber', '$sortCode', '$expiraryDate', '$cvv' , '$currency_ID')";
+//                 if ($conn->query($cardQuery) === TRUE) {
+//                     $card_id = $conn->insert_id;
+//                     $initialBalance = 1000; // Store a default sample balance of 1000 in the account, normally banking websites like these wouldn't do this.
     
-                    $accountQuery = "INSERT INTO accounts (user_ID, card_ID, balance) VALUES('$user_id', '$card_id' , '$initialBalance')";
-                    if ($conn->query($accountQuery) === TRUE) {
-                        echo "<script type='text/javascript'>
-                    window.location.href = 'logIn.php';
-                    alert('Account was succesffuly made!');
-                    </script>";
-                        session_unset();
-                        session_destroy();
-                        exit();
-                    } else {
-                        echo "Error: " . $conn->error;
-                    }
-                } else {
-                    echo "Error: " . $conn->error;
-                }
-            }
-        } else {
-            echo "Error: " . $conn->error;
-        }
-    }
+//                     $accountQuery = "INSERT INTO accounts (user_ID, card_ID, balance) VALUES('$user_id', '$card_id' , '$initialBalance')";
+//                     if ($conn->query($accountQuery) === TRUE) {
+//                         echo "<script type='text/javascript'>
+//                     window.location.href = 'logIn.php';
+//                     alert('Account was succesffuly made!');
+//                     </script>";
+//                         session_unset();
+//                         session_destroy();
+//                         exit();
+//                     } else {
+//                         echo "Error: " . $conn->error;
+//                     }
+//                 } else {
+//                     echo "Error: " . $conn->error;
+//                 }
+//             }
+//         } else {
+//             echo "Error: " . $conn->error;
+//         }
+//     }
+
+
+
+//-----------updated one-------------------//
+// if (isset($_POST["register"])) {
+
+//     $user_ID = $_SESSION['user_ID'];
+
+//     if(!isset($user_ID)){
+//     $prefix = $_SESSION['prefix'];
+//     $firstName = $_SESSION['firstName'];
+//     $lastName = $_SESSION['lastName'];
+//     $userType = $_SESSION['userType'];
+//     $email = $_SESSION['email'];
+//     $countryCode= $_SESSION['countryCode'];
+//     $mobileNumber = $_SESSION['mobileNumber'];
+//     $password = $_SESSION['password'];
+
+//     $insertQuery = "INSERT INTO users (prefix, firstName, lastName, userType, email, countryCode, mobileNumber, password)
+//     VALUES('$prefix', '$firstName', '$lastName', '$userType', '$email', '$countryCode', '$mobileNumber', '$password')";
+
+//     }
+    
+// $insertQuery=0;
+       
+//         if ($conn->query($insertQuery) === TRUE || isset($user_ID)){
+            
+//             $user_id = $conn-> insert_id;
+//             if(isset($user_ID)){
+//                 $_SESSION['user_ID'] = $user_id;
+//             } 
+
+//             // $cardNumber = encrypt($_POST['cardNumber'], "cat");
+//             // $accountNumber = encrypt($_POST['accountNumber'], "cat");
+            
+//             $cardNumber = $_POST['cardNumber'];
+//             $accountNumber = $_POST['accountNumber'];
+//             $sortCode = $_POST['sortCode'];
+//             $expiraryDate = $_POST['expiraryDate'];
+//             $cvv = $_POST['cvv'];
+//             $currency_ID = 1;
+
+//             $checkCardUnique = "SELECT * FROM cards WHERE cardNumber='$cardNumber' AND accountNumber='$accountNumber'";
+//             $cardResult = $conn->query($checkCardUnique);
+//             if ($cardResult->num_rows > 0) {  
+//                 echo "<script>
+//                 alert('That card already exists!');
+//                 window.location.href = 'cardDetails.php';
+//                 </script>";
+//             } else {
+//                 $cardQuery = "INSERT INTO cards (cardNumber, accountNumber, sortCode, expiraryDate, cvv, currency_ID)
+//                               VALUES('$cardNumber', '$accountNumber', '$sortCode', '$expiraryDate', '$cvv' , '$currency_ID')";
+//                 if ($conn->query($cardQuery) === TRUE) {
+//                     $card_id = $conn->insert_id;
+//                     $initialBalance = 1000; // Store a default sample balance of 1000 in the account, normally banking websites like these wouldn't do this.
+    
+//                     $accountQuery = "INSERT INTO accounts (user_ID, card_ID, balance) VALUES('$user_id', '$card_id' , '$initialBalance')";
+//                     if ($conn->query($accountQuery) === TRUE) {
+//                         echo "<script type='text/javascript'>
+//                     window.location.href = 'logIn.php';
+//                     alert('Account was succesffuly made!');
+//                     </script>";
+//                         session_unset();
+//                         session_destroy();
+//                         exit();
+//                     } else {
+//                         echo "Error: " . $conn->error;
+//                     }
+//                 } else {
+//                     echo "Error: " . $conn->error;
+//                 }
+//             }
+//         } else {
+//             echo "Error: " . $conn->error;
+//         }
+//     }
+
+
+
+
+
+
+
+
+
+//testing on this one 
+
+// if (isset($_POST["register"])) {
+
+//     if (!isset($_SESSION['user_ID'])) {
+//         // New user registration
+//         $prefix = $_SESSION['prefix'];
+//         $firstName = $_SESSION['firstName'];
+//         $lastName = $_SESSION['lastName'];
+//         $userType = $_SESSION['userType'];
+//         $email = $_SESSION['email'];
+//         $countryCode= $_SESSION['countryCode'];
+//         $mobileNumber = $_SESSION['mobileNumber'];
+//         $password = $_SESSION['password'];
+
+//         $insertQuery = "INSERT INTO users (prefix, firstName, lastName, userType, email, countryCode, mobileNumber, password)
+//                         VALUES('$prefix', '$firstName', '$lastName', '$userType', '$email', '$countryCode', '$mobileNumber', '$password')";
+
+//         if ($conn->query($insertQuery) === TRUE) {
+//             $user_ID = $conn->insert_id;
+//             $_SESSION['user_ID'] = $user_ID;
+//         } else {
+//             echo "Error inserting user: " . $conn->error;
+//             exit();
+//         }
+//     } else {
+//         // User already logged in
+//         $user_ID = $_SESSION['user_ID'];
+//     }
+
+//     // Proceed to register card/account for this user
+//     $cardNumber = $_POST['cardNumber'];
+//     $accountNumber = $_POST['accountNumber'];
+//     $sortCode = $_POST['sortCode'];
+//     $expiraryDate = $_POST['expiraryDate'];
+//     $cvv = $_POST['cvv'];
+//     $currency_ID = 1;
+
+//     $checkCardUnique = "SELECT * FROM cards WHERE cardNumber='$cardNumber' AND accountNumber='$accountNumber'";
+//     $cardResult = $conn->query($checkCardUnique);
+//     if ($cardResult->num_rows > 0) {  
+//         echo "<script>
+//         alert('That card already exists!');
+//         window.location.href = 'cardDetails.php';
+//         </script>";
+//     } else {
+//         $cardQuery = "INSERT INTO cards (cardNumber, accountNumber, sortCode, expiraryDate, cvv, currency_ID)
+//                       VALUES('$cardNumber', '$accountNumber', '$sortCode', '$expiraryDate', '$cvv' , '$currency_ID')";
+//         if ($conn->query($cardQuery) === TRUE) {
+//             $card_id = $conn->insert_id;
+//             $initialBalance = 1000;
+
+//             $accountQuery = "INSERT INTO accounts (user_ID, card_ID, balance) VALUES('$user_ID', '$card_id' , '$initialBalance')";
+//             if ($conn->query($accountQuery) === TRUE) {
+//                 echo "<script type='text/javascript'>
+//                 alert('Account was successfully made!');
+//                 window.location.href = 'logIn.php';
+//                 </script>";
+//                 session_unset();
+//                 session_destroy();
+//                 exit();
+//             } 
+//             else if ($conn->query($accountQuery) === TRUE && isset($user_ID)) {
+//                 echo "<script type='text/javascript'>
+//                 alert(' New Account was successfully made!');
+//                 window.location.href = 'moneyBalance.php';
+//                 </script>";
+//                 // session_unset();
+//                 // session_destroy();
+//                 exit();
+//             } else {
+//                 echo "Error: " . $conn->error;
+//             }
+//         } else {
+//             echo "Error: " . $conn->error;
+//         }
+//     }
+// }
+
+
 
  if(isset($_POST['logIn'])) {
     

@@ -6,7 +6,6 @@ $conn = connectDB();
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = $_POST['email'];
 
-    // Check if the email exists in the database
     $stmt = $conn->prepare("SELECT email FROM users WHERE email = ?");
     if ($stmt === false) {
         die("Prepare failed: " . $conn->error);
@@ -17,11 +16,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->store_result();
 
     if ($stmt->num_rows > 0) {
-        // Email exists, display a message and redirect after 5 seconds
         $message = "Email address found. Redirecting to update password page in 5 seconds...";
         header("refresh:5;url=updatePassword.php?email=" . urlencode($email));
     } else {
-        // Email does not exist, display an error message
         $error = "Email address not found.";
     }
 

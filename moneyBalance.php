@@ -3,6 +3,7 @@
 include 'connect.php';
 include 'encryption.php';
 include 'session.php';
+include 'keepAlive.php';
 $conn = connectDB();
 
 
@@ -35,6 +36,7 @@ $userType = $result['userType'];
 $firstName = $result['firstName'];
 $lastName = $result['lastName'];
 $email = $result['email']; 
+$userType = $result['userType']; 
  
 
 checkSession ($path); 
@@ -95,7 +97,11 @@ checkSession ($path);
 
     <nav class="navBar">
       <ul>
-        <li><a href="invest.php">INVEST |</a></li>
+        <?php
+        if($userType == "Business Owner"){
+          echo '        <li><a href="invest.php">INVEST |</a></li>';
+        } 
+        ?>
         <li><a href="moneyBalance.php">PAYMENTS |</a></li>
         <li><a href="transactionHistory.php">TRANSACTION HISTORY |</a></li>
         <li><a href="contactUs.php">CONTACT US</a></li>
@@ -134,6 +140,7 @@ checkSession ($path);
 //     echo "You are Broke";
 //   }
 // }
+
 
 if($email){
   $email = $_SESSION['email'];
@@ -231,38 +238,6 @@ if($email){
 
 
 
-<!-- 
-  <div class="sendMoney">
-
-  <form action="sendMoney.php" method= "POST" >
-
-
-    <h2>Recipient Details: </h2><br><br>
-
-    <label for="recipient">Recipient Name:</label>
-    <input type="text"  name="recipientFullName" ><br><br> 
-
-    <label for="accountNumber">Account Number:</label>
-    <input type="text"  name="recipientAccountNumber" oninput="convertToInt()" class="changeToInt"  maxlength="8" required><br><br>
-
-    <label for="sortCode">Sort Code:</label>
-    <input type="text" name="recipientSortCode" oninput="convertToInt()" class="changeToInt"  maxlength="6" required><br><br> 
-
-
-    <label for="amount">Amount:</label>
-    <input type="number" name="amount" required><br><br>
-
-
-    <input type="submit" class="logInSignUp" name = "sendMoney" value="Send Money">
-  </form>
-
-  <button onclick="hide()" class="back">Back</button>    
-  
-    </div>
- -->
-
-
-
  <div class="sendMoney">
   <form action="sendMoney.php" method="POST">
     <h2>Recipient Details:</h2><br><br>
@@ -335,6 +310,52 @@ if($email){
 
   </div>
 </body>
+
+
+<div id="sessionWarning" style="display: none; position: fixed; top: 0; left: 0; 
+    width: 100%; height: 100%; background: rgba(0,0,0,0.5); 
+    justify-content: center; align-items: center; z-index: 9999;">
+  <div style="background: white; padding: 20px; border-radius: 10px; text-align: center;">
+    <p>Your session is about to expire. Do you want to stay logged in?</p>
+    <button onclick="keepSessionAlive()">Yes, keep me logged in</button>
+  </div>
+</div>
+
+<script>
+    const warningTime = 60 * 29; // show warning at 29 minutes
+    const logoutTime = 60 * 30; // logout at 30 minutes
+
+    let warningTimer = setTimeout(showWarningModal, warningTime * 1000);
+    let logoutTimer = setTimeout(autoLogout, logoutTime * 1000);
+
+    function showWarningModal() {
+        document.getElementById('sessionWarning').style.display = 'flex';
+    }
+
+    function keepSessionAlive() {
+        fetch('keepAlive.php') // this resets the session server-side
+            .then(response => {
+                if (response.ok) {
+                    resetSessionTimers();
+                    document.getElementById('sessionWarning').style.display = 'none';
+                }
+            });
+    }
+
+    function autoLogout() {
+        window.location.href = 'logOut.php';
+    }
+
+    function resetSessionTimers() {
+        clearTimeout(warningTimer);
+        clearTimeout(logoutTimer);
+        warningTimer = setTimeout(showWarningModal, warningTime * 1000);
+        logoutTimer = setTimeout(autoLogout, logoutTime * 1000);
+    }
+</script>
+
+
+
 </html>
 
 

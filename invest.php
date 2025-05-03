@@ -17,6 +17,33 @@ $email = $_SESSION['email']; //this value is obtained from the login page when t
 $user_ID = $_SESSION['user_ID']; //this value is obtained from the login page when the user is verified
 checkSession ($path); //calling the function from session.php
 
+
+$sql = "SELECT t.amount, t.transaction_date
+        FROM transactions t
+        INNER JOIN users u ON t.sender_id = u.user_ID
+        WHERE t.sender_id = ?";
+
+$stmt = $conn->prepare($sql);
+if (!$stmt) {
+    die("Prepare failed: " . $conn->error); // Helpful error output
+}
+
+$stmt->bind_param("i", $user_ID);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$dates = [];
+$amounts = [];
+
+while ($row = $result->fetch_assoc()) {
+    $dates[] = $row['transaction_date'];
+    $amounts[] = $row['amount'];
+}
+
+
+
+
+
 ?>
 
 
@@ -90,11 +117,60 @@ checkSession ($path); //calling the function from session.php
     <div class="title">
       <h1>Invest</h1>
     </div>
-    
-
-
-
+    <div style="width: 80%; margin: auto; padding-top: 20px;">
+    <canvas id="investmentChart"></canvas>
+    </div>
   </main>
+
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const labels = <?php echo json_encode($dates); ?>;
+  const data = {
+    labels: labels,
+    datasets: [{
+      label: 'Investments',
+      data: <?php echo json_encode($amounts); ?>,
+      backgroundColor: 'rgba(75, 192, 192, 0.5)',
+      borderColor: 'rgba(75, 192, 192, 1)',
+      borderWidth: 1
+    }]
+  };
+
+  const config = {
+    type: 'bar',
+    data: data,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+          title: {
+            display: true,
+            text: 'Amount Invested ($)'
+          }
+        },
+        x: {
+          title: {
+            display: true,
+            text: 'Date'
+          }
+        }
+      }
+    }
+  };
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const ctx = document.getElementById('investmentChart').getContext('2d');
+    new Chart(ctx, config);
+  });
+</script>
+
+
+
+
+
 
   <footer>
     <div class="footerItems">

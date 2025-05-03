@@ -8,8 +8,25 @@ $isLoggedIn= false;
 
 if (isset($_SESSION['user_ID'])){
   $isLoggedIn= true;
-}
+  }
 
+$user_ID = $_SESSION['user_ID'];
+
+$query = "SELECT u.userType
+                    FROM users AS u
+                    WHERE u.user_ID = $user_ID";
+
+
+
+                    $result = $conn->query($query);
+
+                    
+              if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                      
+                $userType = $row['userType'];
+              }
+          }
 ?>
 
 <!DOCTYPE html>
@@ -70,7 +87,10 @@ if (isset($_SESSION['user_ID'])){
     <li><a href="logIn.php">LOG IN |</a></li>';
     }
     else{
-    echo'<li><a href="invest.php">INVEST |</a></li>
+      if ($userType == 'Business Owner'){
+    echo'<li><a href="invest.php">INVEST |</a></li>';
+      }
+    echo'
     <li><a href="moneyBalance.php">PAYMENTS |</a></li>
     <li><a href="transactionHistory.php">TRANSACTION HISTORY |</a></li>
     ';

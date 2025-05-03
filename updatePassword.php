@@ -8,7 +8,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $conn = new mysqli('localhost', 'root', '', 'smartpay');
     
-    // Verify token
     $stmt = $conn->prepare("SELECT email FROM password_resets WHERE token = ? AND expiry > NOW()");
     $stmt->bind_param("s", $token);
     $stmt->execute();
@@ -18,7 +17,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bind_result($email);
         $stmt->fetch();
 
-        // Update password
         $stmt = $conn->prepare("UPDATE users SET password = ? WHERE email = ?");
         $stmt->bind_param("ss", $newPassword, $email);
         $stmt->execute();
