@@ -4,29 +4,53 @@ include 'session.php';
 $conn = connectDB();
 session_start();
 
-$isLoggedIn= false;
+// $isLoggedIn= false;
 
-if (isset($_SESSION['user_ID'])){
-  $isLoggedIn= true;
-  }
-
-$user_ID = $_SESSION['user_ID'];
-
-$query = "SELECT u.userType
-                    FROM users AS u
-                    WHERE u.user_ID = $user_ID";
-
+// if (isset($_SESSION['user_ID'])){
+//   $isLoggedIn= true;
+  
+//   }
+// $user_ID = $_SESSION['user_ID'];
+// $query = "SELECT u.userType
+//                     FROM users AS u
+//                     WHERE u.user_ID = $user_ID";
 
 
-                    $result = $conn->query($query);
+
+//                     $result = $conn->query($query);
 
                     
-              if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
+//               if ($result->num_rows > 0) {
+//                 while ($row = $result->fetch_assoc()) {
                       
-                $userType = $row['userType'];
-              }
+//                 $userType = $row['userType'];
+//               }
+//           }
+
+
+    $isLoggedIn= false;
+
+
+    if (isset($_SESSION['user_ID'])) {
+      $user_ID = $_SESSION['user_ID'];
+      $isLoggedIn= true;
+
+        
+            // Sanitize for safety (basic example)
+      $user_ID = intval($user_ID);
+        
+            // Your query
+      $query = "SELECT u.userType FROM users AS u WHERE u.user_ID = $user_ID";
+      $result = $conn->query($query);
+        
+        if ($result && $result->num_rows > 0) {
+          while ($row = $result->fetch_assoc()) {
+              $userType = $row['userType'];
           }
+        } else {
+                echo "No user found or query failed.";
+        }
+    } 
 ?>
 
 <!DOCTYPE html>
@@ -88,7 +112,7 @@ $query = "SELECT u.userType
     }
     else{
       if ($userType == 'Business Owner'){
-    echo'<li><a href="invest.php">INVEST |</a></li>';
+        echo'<li><a href="invest.php">INVEST |</a></li>';
       }
     echo'
     <li><a href="moneyBalance.php">PAYMENTS |</a></li>

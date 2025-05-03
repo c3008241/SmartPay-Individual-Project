@@ -1,12 +1,15 @@
 <?php
 
-include 'connect.php';
+require 'connect.php';
 include 'encryption.php';
 include 'session.php';
 include 'keepAlive.php';
 $conn = connectDB();
 
-
+// $result = $conn->query("SELECT DATABASE() as db");
+// if ($result && $row = $result->fetch_assoc()) {
+//     echo "Connected to DB: " . $row['db'] . "<br>";
+// }
  
 $path = "logIn.php"; //this path is to pass to checkSession function from session.php 
     
@@ -37,6 +40,13 @@ $firstName = $result['firstName'];
 $lastName = $result['lastName'];
 $email = $result['email']; 
 $userType = $result['userType']; 
+$sortCode = $result['sortCode']; 
+$accountNumber = $result['accountNumber']; 
+$fullName = $result['firstName'] . " " . $result['lastName'];
+$mobileNumber = $result['countryCode'] . " " . $result['mobileNumber'];
+
+
+
  
 
 checkSession ($path); 
@@ -146,12 +156,19 @@ if($email){
   $email = $_SESSION['email'];
 
   
-  $fullName = $result['firstName'] . " " . $result['lastName'];
+  // $fullName = $result['firstName'] . " " . $result['lastName'];
 
         echo $fullName;
     
         echo "<h3>".$result['userType']." &#126; ".$result['currencyCode']." </h3>";
         echo "<h1>".$result['symbol'].$result['balance']."</h1>";
+
+
+      
+$result = $conn->query("SELECT DATABASE() as db");
+if ($result && $row = $result->fetch_assoc()) {
+    echo "Connected to DB: " . $row['db'] . "<br>";
+}
   
     
   }
@@ -194,36 +211,32 @@ if($email){
 
 if($email){
   
-        $fullName = $result['firstName'] . " " . $result['lastName'];
-        $mobileNumber = $result['countryCode'] . " " . $result['mobileNumber'];
+        
         echo '
 <div class = "accountDetailsContainer">
         <label>Full Name:</label>
         <h3>'.$fullName.' </h3>
 
         <label>Sort Code:</label>
-        <h3>'.$result['sortCode'].' </h3>
+        <h3>'.$sortCode.' </h3>
 
 
          <label>Account Number:</label>
-        <h3>'.$result['accountNumber'].' </h3>
+        <h3>'.$accountNumber.' </h3>
 
          <label>Email Address:</label>
-        <h3>'.$result['email'].' </h3>
+        <h3>'.$email.' </h3>
 
           <label>Mobile Number:</label>
         <h3>'.$mobileNumber.' </h3>
 
           <label>Account Type:</label>
-        <h3>'.$result['userType'].' </h3>
-</div>
+        <h3>'.$userType.'</h3>
+</div>   
+        '; 
 
-        
-        ';
-  
-    
-  }
 
+}
   
     ?>
         <button onclick="hide()" class="back">Back</button>    
