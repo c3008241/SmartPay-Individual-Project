@@ -41,7 +41,6 @@ $query ="SELECT
 FROM accounts AS a
 INNER JOIN users AS u ON u.user_ID = a.user_ID
 INNER JOIN transactions AS t ON t.sender_id = u.user_ID
-
 INNER JOIN currencies AS cu ON cu.currency_ID = t.currencyID
 INNER JOIN users AS ru ON ru.user_ID = t.recipient_id
 WHERE u.user_ID = $user_ID";
@@ -50,6 +49,9 @@ WHERE u.user_ID = $user_ID";
 $result = $conn->query($query);
 
 $transactions = [];
+
+$userType = null; // to avoid undefined variable notice
+
 
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
@@ -66,8 +68,17 @@ if ($result->num_rows > 0) {
             
         ];
         $transactions[] = $transaction;
-        $userType = $row['userType'];
     }
+}
+
+//this query helped get rid of the undefined variable notice, though i believe the previous query could have been altered to make the code cleaner.
+$userQuery = "SELECT userType FROM users WHERE user_ID = $user_ID";
+$userResult = $conn->query($userQuery);
+
+$userType = null;
+if ($userResult && $userResult->num_rows > 0) {
+    $userRow = $userResult->fetch_assoc();
+    $userType = $userRow['userType'];
 }
 ?>
 

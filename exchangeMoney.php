@@ -22,6 +22,15 @@ if (isset($_POST['exchangeMoney'])) {
         $currentCurrency = $row['currencyCode']; // FOR E.G , "USD"
         $currentExchangeRate = $row['exchangeRate']; // FOR e.g., 1.25 (USD TO GBP)
 
+        ////checks if balance is less that or equal to 10
+         if ($currentBalance <=20) {
+        echo "<script>
+        alert('You have an insufficient balance to exchange.');
+        window.location.href = 'moneyBalance.php';
+        </script>";
+        exit; 
+    }
+
         // 2,  CONVERT  the current balance to GBP (Pounds)
         $balanceInGBP = $currentBalance / $currentExchangeRate;
 
@@ -36,6 +45,16 @@ if (isset($_POST['exchangeMoney'])) {
 
             // 4. convert GBP to the target currency //// ---- THIS will convert it to british pounds first before making the exchange)!!
             $convertedAmount = round($balanceInGBP * $targetExchangeRate, 2);
+
+
+    //         //I am testing if this would work better than  my initial attempt on line 26
+    //           if ($convertedAmount <=10) {
+    //     echo "<script>
+    //     alert('You have no balance to exchange.');
+    //     window.location.href = 'moneyBalance.php';
+    //     </script>";
+    //     exit; 
+    // }
 
             // 5. update BALANCE and CURRENCY in a transaction
             $conn->begin_transaction();

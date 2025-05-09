@@ -115,6 +115,8 @@ if (isset($_POST["register"])) {
             //     window.location.href = 'cardDetails.php';
             //     </script>";
             // } else {
+
+            //I changed this to use prepared statements to prevent SQL injection attacks, I am experimenting different ways to store data.
             $checkCardUnique = "SELECT * FROM cards WHERE cardNumber = ? OR accountNumber = ?";
             $stmt = $conn->prepare($checkCardUnique);
             $stmt->bind_param("ss", $cardNumber, $accountNumber);
