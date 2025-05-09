@@ -103,7 +103,7 @@ while ($row = $result->fetch_assoc()) {
     <nav class="navBar">
       <ul>
         <li><a href="invest.php">INVEST |</a></li>
-        <li><a href="moneyBalance.php">PAYMENTS |</a></li>
+        <li><a href="moneyBalance.php">BALANCE |</a></li>
         <li><a href="transactionHistory.php">TRANSACTION HISTORY |</a></li>
         <li><a href="contactUs.php">CONTACT US</a></li>
       </ul>

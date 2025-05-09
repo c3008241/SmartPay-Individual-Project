@@ -115,7 +115,7 @@ session_start();
         echo'<li><a href="invest.php">INVEST |</a></li>';
       }
     echo'
-    <li><a href="moneyBalance.php">PAYMENTS |</a></li>
+    <li><a href="moneyBalance.php">BALANCE |</a></li>
     <li><a href="transactionHistory.php">TRANSACTION HISTORY |</a></li>
     ';
     }

@@ -146,7 +146,7 @@ if ($result->num_rows > 0) {
          } 
         ?>
 
-        <li><a href="moneyBalance.php">PAYMENTS |</a></li>
+        <li><a href="moneyBalance.php">BALANCE |</a></li>
         <li><a href="transactionHistory.php">TRANSACTION HISTORY |</a></li>
         <li><a href="contactUs.php">CONTACT US</a></li>
       </ul>

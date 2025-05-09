@@ -1,11 +1,20 @@
+IMPORTANT TOOLS, MOCKPLUS GITHUB URL AND SAMPLE ACCOUNTS HERE!!
+
+Github URL https code here: https://github.com/c3008241/SmartPay-Individual-Project.git
+
+
+MOCKPLUS LOG IN DETAILS:
+username: c3008241@hallam.shu.ac.uk
+password:Smartpay123
+
+
+
+
 SAMPLE ACCOUNT DETAILS TO LOG IN OR SEND MONEY! 
 
+////BUSINESS OWNER////
 
-
-
-////BUSINESS OWNERS////
-
-ACCOUNT 1 (Don Steven)
+ACCOUNT (Don Steven)
 
 to log in:
 email: donsteven@gmail.com
@@ -18,22 +27,10 @@ sortcode: 595959
 
 
 
-<!-- ACCOUNT 2 (Sam Whitaker)
 
-to log in:
-email: samwhitaker@gmail.com
-password:sam
+////OTHER (TOURIST)////
 
-to send money to sam:
-account number:88888888
-sortcode:888888
- -->
-
-
-////OTHER [TOURIST OR PERSONAL]////
-
-
-ACCOUNT 1 (Ray Saleh)
+ACCOUNT (Ray Saleh) 
 
 to log in:
 email: ray@gmail.com

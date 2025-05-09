@@ -97,8 +97,8 @@ if (isset($_POST["register"])) {
             
             $user_id = $conn-> insert_id;
 
-            // $cardNumber = encrypt($_POST['cardNumber'], "cat");
-            // $accountNumber = encrypt($_POST['accountNumber'], "cat");
+            $cardNumber = encrypt($_POST['cardNumber'], "cat");
+            $accountNumber = encrypt($_POST['accountNumber'], "cat");
             
             $cardNumber = $_POST['cardNumber'];
             $accountNumber = $_POST['accountNumber'];
@@ -107,14 +107,27 @@ if (isset($_POST["register"])) {
             $cvv = $_POST['cvv'];
             $currency_ID = 1;
 
-            $checkCardUnique = "SELECT * FROM cards WHERE cardNumber='$cardNumber' OR accountNumber='$accountNumber'";
-            $cardResult = $conn->query($checkCardUnique);
-            if ($cardResult->num_rows > 0) {  
+            // $checkCardUnique = "SELECT * FROM cards WHERE cardNumber='$cardNumber' OR accountNumber='$accountNumber'";
+            // $cardResult = $conn->query($checkCardUnique);
+            // if ($cardResult->num_rows > 0) {  
+            //     echo "<script>
+            //     alert('That card already exists!');
+            //     window.location.href = 'cardDetails.php';
+            //     </script>";
+            // } else {
+            $checkCardUnique = "SELECT * FROM cards WHERE cardNumber = ? OR accountNumber = ?";
+            $stmt = $conn->prepare($checkCardUnique);
+            $stmt->bind_param("ss", $cardNumber, $accountNumber);
+            $stmt->execute();
+            $cardResult = $stmt->get_result();
+
+            if ($cardResult->num_rows > 0) {
                 echo "<script>
                 alert('That card already exists!');
                 window.location.href = 'cardDetails.php';
                 </script>";
             } else {
+   
                 $cardQuery = "INSERT INTO cards (cardNumber, accountNumber, sortCode, expiraryDate, cvv, currency_ID)
                               VALUES('$cardNumber', '$accountNumber', '$sortCode', '$expiraryDate', '$cvv' , '$currency_ID')";
                 if ($conn->query($cardQuery) === TRUE) {
