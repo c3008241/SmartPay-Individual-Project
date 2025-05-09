@@ -11,11 +11,29 @@ if (!isset($user_ID)) {
     exit();
 }
 
-$query = "SELECT 
+// $query = "SELECT 
+//     a.*, 
+//     u.*, 
+//     t.*, 
+//     ca.*, 
+//     cu.*,
+//     ru.firstName AS recipientFirstName,
+//     ru.lastName AS recipientLastName,
+//     ru.email AS recipientEmail
+// FROM accounts AS a
+// INNER JOIN users AS u ON u.user_ID = a.user_ID
+// INNER JOIN transactions AS t ON t.sender_id = u.user_ID
+// INNER JOIN cards AS ca ON ca.card_ID = a.card_ID
+// INNER JOIN currencies AS cu ON cu.currency_ID = ca.currency_ID
+// INNER JOIN users AS ru ON ru.user_ID = t.recipient_id
+// WHERE u.user_ID = $user_ID";
+
+
+//instead of inner joining currencies with cards, I changed it to  inner joining currencies with transactions so that i can get the currency id of the currency at the TIME of the transaction.
+$query ="SELECT 
     a.*, 
     u.*, 
     t.*, 
-    ca.*, 
     cu.*,
     ru.firstName AS recipientFirstName,
     ru.lastName AS recipientLastName,
@@ -23,10 +41,11 @@ $query = "SELECT
 FROM accounts AS a
 INNER JOIN users AS u ON u.user_ID = a.user_ID
 INNER JOIN transactions AS t ON t.sender_id = u.user_ID
-INNER JOIN cards AS ca ON ca.card_ID = a.card_ID
-INNER JOIN currencies AS cu ON cu.currency_ID = ca.currency_ID
+
+INNER JOIN currencies AS cu ON cu.currency_ID = t.currencyID
 INNER JOIN users AS ru ON ru.user_ID = t.recipient_id
 WHERE u.user_ID = $user_ID";
+
 
 $result = $conn->query($query);
 
@@ -118,6 +137,9 @@ if ($result->num_rows > 0) {
 
     <nav class="navBar">
       <ul>
+
+
+
         <?php 
           if($userType == 'Business Owner') {
           echo'<li><a href="invest.php">INVEST |</a></li>';

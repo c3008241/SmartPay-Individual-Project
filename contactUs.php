@@ -41,7 +41,7 @@ session_start();
         
             // Your query
       $query = "SELECT u.userType FROM users AS u WHERE u.user_ID = $user_ID";
-      $result = $conn->query($query);
+      $result = $conn->query($query); 
         
         if ($result && $result->num_rows > 0) {
           while ($row = $result->fetch_assoc()) {

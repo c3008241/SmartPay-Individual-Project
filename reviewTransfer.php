@@ -51,6 +51,7 @@ unset($_SESSION['receipt_data']);
   <link rel="stylesheet" href="styling/headerAndFooter.css">
   <link rel="stylesheet" href="styling/style.css">
   <link rel="stylesheet" href="styling/reciept.css">
+  <link rel="stylesheet" href="styling/mobile.css">
 
   <link rel ="icon" href="images/smartPayLogo.png" >
   <title>Review Reciept | SmartPay</title>

@@ -126,6 +126,16 @@ while ($row = $result->fetch_assoc()) {
 <!-- Chart.js CDN -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+
+<div id="sessionWarning" style="display: none; position: fixed; top: 0; left: 0; 
+    width: 100%; height: 100%; background: rgba(0,0,0,0.5); 
+    justify-content: center; align-items: center; z-index: 9999;">
+  <div style="background: white; padding: 20px; border-radius: 10px; text-align: center;">
+    <p>Your session is about to expire. Do you want to stay logged in?</p>
+    <button onclick="keepSessionAlive()">Yes, keep me logged in</button>
+  </div>
+</div>
+
 <script>
   const labels = <?php echo json_encode($dates); ?>;
   const data = {
@@ -165,6 +175,42 @@ while ($row = $result->fetch_assoc()) {
     const ctx = document.getElementById('investmentChart').getContext('2d');
     new Chart(ctx, config);
   });
+
+
+
+
+
+
+    const warningTime = 60 * 29; // show warning at 29 minutes
+    const logoutTime = 60 * 30; // logout at 30 minutes
+
+    let warningTimer = setTimeout(showWarningModal, warningTime * 1000);
+    let logoutTimer = setTimeout(autoLogout, logoutTime * 1000);
+
+    function showWarningModal() {
+        document.getElementById('sessionWarning').style.display = 'flex';
+    }
+
+    function keepSessionAlive() {
+        fetch('keepAlive.php') // this resets the session server-side
+            .then(response => {
+                if (response.ok) {
+                    resetSessionTimers();
+                    document.getElementById('sessionWarning').style.display = 'none';
+                }
+            });
+    }
+
+    function autoLogout() {
+        window.location.href = 'logOut.php';
+    }
+
+    function resetSessionTimers() {
+        clearTimeout(warningTimer);
+        clearTimeout(logoutTimer);
+        warningTimer = setTimeout(showWarningModal, warningTime * 1000);
+        logoutTimer = setTimeout(autoLogout, logoutTime * 1000);
+    }
 </script>
 
 

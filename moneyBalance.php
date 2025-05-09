@@ -165,10 +165,10 @@ if($email){
 
 
       
-$result = $conn->query("SELECT DATABASE() as db");
-if ($result && $row = $result->fetch_assoc()) {
-    echo "Connected to DB: " . $row['db'] . "<br>";
-}
+// $result = $conn->query("SELECT DATABASE() as db");
+// if ($result && $row = $result->fetch_assoc()) {
+//     echo "Connected to DB: " . $row['db'] . "<br>";
+// }
   
     
   }

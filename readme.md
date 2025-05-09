@@ -2,8 +2,8 @@ SAMPLE ACCOUNT DETAILS TO LOG IN OR SEND MONEY!
 
 
 
-////BUSINESS OWNERS////
 
+////BUSINESS OWNERS////
 
 ACCOUNT 1 (Don Steven)
 
@@ -18,7 +18,7 @@ sortcode: 595959
 
 
 
-ACCOUNT 2 (Sam Whitaker)
+<!-- ACCOUNT 2 (Sam Whitaker)
 
 to log in:
 email: samwhitaker@gmail.com
@@ -27,10 +27,10 @@ password:sam
 to send money to sam:
 account number:88888888
 sortcode:888888
+ -->
 
 
-
-////OTHER [TENANT OR PERSONAL]////
+////OTHER [TOURIST OR PERSONAL]////
 
 
 ACCOUNT 1 (Ray Saleh)
@@ -47,14 +47,6 @@ sortcode: 444444
 
 
 
-ACCOUNT 2 (Rebe)
 
-to log in:
-email: samwhitaker@gmail.com
-password:sam
-
-to send to rebeca:
-account number: 55555555
-sortcode: 555555
 
 

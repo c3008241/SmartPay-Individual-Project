@@ -7,7 +7,7 @@ $conn = connectDB();
 session_start();
 
 
-
+//checking if it is connected to the database for debugging purposes
 // $result = $conn->query("SELECT DATABASE() as db");
 // if ($result && $row = $result->fetch_assoc()) {
 //     echo "Connected to DB: " . $row['db'] . "<br>";
@@ -23,15 +23,27 @@ if (isset($_POST["next"])){
  $email = $_POST['email'];
  $countryCode= $_POST['countryCode'];
  $mobileNumber = $_POST['mobileNumber'];
-if ($_POST['password'] == $_POST['confirmPassword']) {
-     $password = encrypt($_POST['password'], "cat");
- } else {
+if($_POST['password'] == $_POST['confirmPassword']) {
+    $password = encrypt($_POST['password'], "cat");
+} else {
     echo "<script>
-    alert('Passwords don't match.');
+    alert('Passwords do not match.');
     window.location.href = 'signUp.php';
     </script>";
-     exit();
- }
+    exit();
+}
+
+
+///I realised that the alert was not working because I was using ' in "don't" which ended the alert early and gained no response from the page since it was ignored by the system.
+// if ($_POST['password'] == $_POST['confirmPassword']) {
+//      $password = encrypt($_POST['password'], "cat");
+//  } else {
+//     echo "<script>
+//     alert('Passwords don't match.');
+//     window.location.href = 'signUp.php';
+//     </script>";
+//      exit();
+//  }
 
  $checkEmail = "SELECT * FROM users WHERE email='$email'";
  $result = $conn->query($checkEmail);
@@ -56,6 +68,10 @@ if ($_POST['password'] == $_POST['confirmPassword']) {
     header("Location: cardDetails.php");
     exit();
     }
+
+
+
+
     
 }
 
@@ -91,7 +107,7 @@ if (isset($_POST["register"])) {
             $cvv = $_POST['cvv'];
             $currency_ID = 1;
 
-            $checkCardUnique = "SELECT * FROM cards WHERE cardNumber='$cardNumber' AND accountNumber='$accountNumber'";
+            $checkCardUnique = "SELECT * FROM cards WHERE cardNumber='$cardNumber' OR accountNumber='$accountNumber'";
             $cardResult = $conn->query($checkCardUnique);
             if ($cardResult->num_rows > 0) {  
                 echo "<script>

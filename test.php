@@ -51,7 +51,7 @@
 
   <main>
     <div class="title">
-      <h1>Transaction Reciept</h1>
+      <h1>Testing it is the 9th may</h1>
     </div>
   </main>
 
